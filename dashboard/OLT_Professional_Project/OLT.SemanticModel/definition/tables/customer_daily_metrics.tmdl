@@ -1,0 +1,165 @@
+table customer_daily_metrics
+	lineageTag: 6ddcad70-f85d-4b08-857c-c826dcceca4b
+
+	column customer_id
+		dataType: string
+		lineageTag: 3b28833c-5a36-4afd-9fa2-d3533defedbe
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column olt_id
+		dataType: string
+		lineageTag: 43913bf2-1aa2-45ac-8ef7-bb2be945c5d2
+		summarizeBy: none
+		sourceColumn: olt_id
+
+	column log_date
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 56e60e59-518c-40db-b97d-a8cb088ea310
+		summarizeBy: none
+		sourceColumn: log_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column plan_tier
+		dataType: string
+		lineageTag: d3021670-a02f-4a0e-af89-870b95ab0bdc
+		summarizeBy: none
+		sourceColumn: plan_tier
+
+	column value_segment
+		dataType: string
+		lineageTag: f35ca691-2406-495e-a2df-8940537991c2
+		summarizeBy: none
+		sourceColumn: value_segment
+
+	column data_usage_gb
+		dataType: int64
+		lineageTag: a6c7e2c9-462e-4b21-9f3c-18ae3028273e
+		summarizeBy: none
+		sourceColumn: data_usage_gb
+
+	column avg_speed_mbps
+		dataType: int64
+		lineageTag: 92b40923-7234-41b0-9a64-d748a9137755
+		summarizeBy: none
+		sourceColumn: avg_speed_mbps
+
+	column downtime_minutes
+		dataType: int64
+		lineageTag: f3ec7bf9-5124-4396-88d3-eeae5129ff36
+		summarizeBy: none
+		sourceColumn: downtime_minutes
+
+	column latency_ms
+		dataType: int64
+		lineageTag: a58390f0-aff0-493b-bdcd-455ca605fce9
+		summarizeBy: none
+		sourceColumn: latency_ms
+
+	column speed_score
+		dataType: int64
+		lineageTag: 0eeba270-c2a8-4da6-b473-bb0051f0e568
+		summarizeBy: none
+		sourceColumn: speed_score
+
+	column downtime_score
+		dataType: int64
+		lineageTag: 4a4653fe-069b-4d51-afc6-c2289ba4ec74
+		summarizeBy: none
+		sourceColumn: downtime_score
+
+	column latency_score
+		dataType: int64
+		lineageTag: d87b8e9b-d8bf-465c-a402-e05a73956735
+		summarizeBy: none
+		sourceColumn: latency_score
+
+	column experience_score
+		dataType: double
+		lineageTag: f10685ab-a026-4195-9834-f085e7300795
+		summarizeBy: none
+		sourceColumn: experience_score
+
+	column current_7d_avg
+		dataType: double
+		lineageTag: 6860b391-dc54-4700-85f7-0a297d8431dd
+		summarizeBy: none
+		sourceColumn: current_7d_avg
+
+	column previous_7d_avg
+		dataType: double
+		lineageTag: d917a44f-283f-477b-94c1-4ff7b00d2350
+		summarizeBy: none
+		sourceColumn: previous_7d_avg
+
+	column usage_drop_percent
+		dataType: double
+		lineageTag: f05da799-cae0-4ad3-9695-55edb6442f49
+		summarizeBy: none
+		sourceColumn: usage_drop_percent
+
+	column complaint_count
+		dataType: int64
+		lineageTag: 4a1c7c26-b071-4748-8a64-35cfd92a95a6
+		summarizeBy: none
+		sourceColumn: complaint_count
+
+	column complaint_count_30d
+		dataType: int64
+		lineageTag: 5a5b626d-e832-416b-8830-87e24cfbb1a1
+		summarizeBy: none
+		sourceColumn: complaint_count_30d
+
+	column high_usage_drop_flag
+		dataType: int64
+		lineageTag: c8bdb2a2-4663-478d-8530-3a4391f1b09b
+		summarizeBy: none
+		sourceColumn: high_usage_drop_flag
+
+	column high_downtime_flag
+		dataType: int64
+		lineageTag: 8f3646ec-d82f-4474-b185-6d4ef3b751aa
+		summarizeBy: none
+		sourceColumn: high_downtime_flag
+
+	column high_latency_flag
+		dataType: int64
+		lineageTag: a4ceb144-6847-41d5-8864-287d8ee153b9
+		summarizeBy: none
+		sourceColumn: high_latency_flag
+
+	column low_experience_flag
+		dataType: int64
+		lineageTag: 1c2de2b7-c0da-4cd2-9dbb-888a94913dec
+		summarizeBy: none
+		sourceColumn: low_experience_flag
+
+	column complaint_leakage_flag
+		dataType: int64
+		lineageTag: 6810f732-bd1b-4566-800f-07dc4c497abc
+		summarizeBy: none
+		sourceColumn: complaint_leakage_flag
+
+	column churn_risk_score
+		dataType: int64
+		lineageTag: e1da0a8e-ec71-402e-8ec4-3fc577a03534
+		summarizeBy: none
+		sourceColumn: churn_risk_score
+
+	column churn_risk_category
+		dataType: string
+		lineageTag: 39461151-6ee3-4562-868c-0196ba97fdae
+		summarizeBy: none
+		sourceColumn: churn_risk_category
+
+	partition customer_daily_metrics = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\customer_daily_metrics.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Typed = Table.TransformColumnTypes(Headers,{{"customer_id", type text},{"olt_id", type text},{"log_date", type date},{"plan_tier", type text},{"value_segment", type text},{"data_usage_gb", Int64.Type},{"avg_speed_mbps", Int64.Type},{"downtime_minutes", Int64.Type},{"latency_ms", Int64.Type},{"speed_score", Int64.Type},{"downtime_score", Int64.Type},{"latency_score", Int64.Type},{"experience_score", type number},{"current_7d_avg", type number},{"previous_7d_avg", type number},{"usage_drop_percent", type number},{"complaint_count", Int64.Type},{"complaint_count_30d", Int64.Type},{"high_usage_drop_flag", Int64.Type},{"high_downtime_flag", Int64.Type},{"high_latency_flag", Int64.Type},{"low_experience_flag", Int64.Type},{"complaint_leakage_flag", Int64.Type},{"churn_risk_score", Int64.Type},{"churn_risk_category", type text}},"en-US")
+				in Typed
+

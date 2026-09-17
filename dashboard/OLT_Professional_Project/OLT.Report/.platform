@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "OLT_Churn_Network_Risk_Professional"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ccda23e1-9e21-45ff-8c1f-5953eee5be28"
+  }
+}

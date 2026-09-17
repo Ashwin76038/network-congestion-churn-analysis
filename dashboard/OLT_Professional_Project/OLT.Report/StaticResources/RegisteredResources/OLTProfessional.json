@@ -1,0 +1,56 @@
+{
+  "name": "OLTProfessional",
+  "dataColors": [
+    "#D94668",
+    "#149C8B",
+    "#E5A028",
+    "#1666C0",
+    "#6C4CCF"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#25334A",
+  "tableAccent": "#1666C0",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "color": {
+              "solid": {
+                "color": "#25334A"
+              }
+            },
+            "fontSize": 13
+          }
+        ],
+        "categoryAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#52617A"
+              }
+            }
+          }
+        ],
+        "valueAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#52617A"
+              }
+            }
+          }
+        ],
+        "legend": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#52617A"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

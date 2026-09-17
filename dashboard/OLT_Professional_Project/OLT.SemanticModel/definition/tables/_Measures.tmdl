@@ -1,0 +1,147 @@
+table _Measures
+	lineageTag: 4cf0de79-ad90-4c81-9dd5-cd0ddfb01bcc
+
+	measure 'Total Customers' = DISTINCTCOUNT(customers_clean[customer_id])
+		formatString: #,0
+		displayFolder: Customer Experience & Risk
+		lineageTag: 2d93059c-9906-467f-815b-09dd84fe8e30
+
+	measure 'High Risk Customers' = COALESCE(CALCULATE(DISTINCTCOUNT(customer_daily_metrics[customer_id]), KEEPFILTERS(customer_daily_metrics[churn_risk_category] = "High Risk")),0)
+		formatString: #,0
+		displayFolder: Customer Experience & Risk
+		lineageTag: e23dcced-8525-46cc-93d5-3495f77bdc18
+
+	measure '% High Risk Customers' = DIVIDE([High Risk Customers],[Total Customers],0)
+		formatString: 0.0%
+		displayFolder: Customer Experience & Risk
+		lineageTag: 16228fd0-42fe-475f-a1e4-68cc7103d2c5
+
+	measure 'Avg Experience Score' = AVERAGE(customer_daily_metrics[experience_score])
+		formatString: 0.0
+		displayFolder: Customer Experience & Risk
+		lineageTag: c5161c1c-9b20-4f47-8bdc-540107eb94ec
+
+	measure 'Complaint Leakage Customers' = COALESCE(CALCULATE(DISTINCTCOUNT(customer_daily_metrics[customer_id]),KEEPFILTERS(customer_daily_metrics[complaint_leakage_flag]=1)),0)
+		formatString: #,0
+		displayFolder: Customer Experience & Risk
+		lineageTag: 05aab37a-7c08-44cc-8c00-6a5ded23a7cb
+
+	measure 'Leakage Rate' = DIVIDE([Complaint Leakage Customers],[Total Customers],0)
+		formatString: 0.0%
+		displayFolder: Customer Experience & Risk
+		lineageTag: 93e8764f-1173-42ac-964d-11854a19154f
+
+	measure 'Avg Congestion Ratio' = AVERAGE(olt_daily_metrics[congestion_ratio_percent])
+		formatString: 0.0%
+		displayFolder: Network
+		lineageTag: b6450233-f28d-4891-ba55-fd09aff9d71f
+
+	measure 'High Congestion OLTs' = COALESCE(CALCULATE(DISTINCTCOUNT(olt_daily_metrics[olt_id]),olt_daily_metrics[congestion_status]="High"),0)
+		formatString: #,0
+		displayFolder: Network
+		lineageTag: a7c78adc-b6f4-4847-8346-34c7e518675e
+
+	measure 'Total OLTs' = DISTINCTCOUNT(olt_info_clean[olt_id])
+		formatString: #,0
+		displayFolder: Network
+		lineageTag: 4a389b99-bdd9-4662-bfd9-077909e39323
+
+	measure 'Monitored OLTs' = DISTINCTCOUNT(olt_daily_metrics[olt_id])
+		formatString: #,0
+		displayFolder: Network
+		lineageTag: 05c9b19b-8174-4125-9e8f-1c4dfb7bf2ae
+
+	measure 'Network Coverage' = DIVIDE([Monitored OLTs],[Total OLTs],0)
+		formatString: 0.0%
+		displayFolder: Network
+		lineageTag: 13c0bc8a-6617-498d-90fb-2561a579f0cd
+
+	measure 'Risk Customers' = DISTINCTCOUNT(customer_daily_metrics[customer_id])
+		formatString: #,0
+		displayFolder: Customer Experience & Risk
+		lineageTag: 717ce246-9e8a-485e-9311-a7ceec3659e3
+
+	measure 'Risk Summary' = FORMAT([High Risk Customers],"#,0") & " customers with high-risk observations (" & FORMAT([% High Risk Customers],"0.0%") & ")."
+		displayFolder: Customer Experience & Risk
+		lineageTag: 3992cc5b-bc7c-4367-a68a-f3c7d774664a
+
+	measure 'Leakage Status' = IF([Complaint Leakage Customers]=0,"No Complaint Leakage Cases Detected",FORMAT([Complaint Leakage Customers],"#,0") & " customers need proactive outreach")
+		displayFolder: Customer Experience & Risk
+		lineageTag: 1b44a8b5-8bdc-4845-a361-c14dff7a3083
+
+	measure 'Average Throughput Gbps' = AVERAGE(olt_daily_metrics[avg_gbps])
+		formatString: 0.000
+		displayFolder: Network
+		lineageTag: 22dd149e-7818-4b2e-b381-7b98aae81b34
+
+	measure 'Capacity Gbps' = MAX(olt_info_clean[capacity_gbps])
+		formatString: 0
+		displayFolder: Network
+		lineageTag: 20f9b8f0-b9ed-45f2-a9aa-0029444ad9db
+
+	measure 'Leakage Experience' = CALCULATE(AVERAGE(customer_daily_metrics[experience_score]),customer_daily_metrics[complaint_leakage_flag]=1)
+		formatString: 0.0
+		displayFolder: Customer Experience & Risk
+		lineageTag: e8cff1d0-b5f4-4a5d-babf-e9ebbc65df84
+
+	measure 'Leakage Risk Score' = CALCULATE(MAX(customer_daily_metrics[churn_risk_score]),customer_daily_metrics[complaint_leakage_flag]=1)
+		formatString: 0.0
+		displayFolder: Customer Experience & Risk
+		lineageTag: 843d5b12-b067-46f8-8c3a-d6f64eb2dc5e
+
+	measure 'Avg Downtime Minutes' = AVERAGE(customer_daily_metrics[downtime_minutes])
+		formatString: 0.0
+		displayFolder: Professional Diagnostics
+		lineageTag: 5d558d83-4edd-4716-aa02-98f6dd59da24
+
+	measure 'Avg Latency Ms' = AVERAGE(customer_daily_metrics[latency_ms])
+		formatString: 0.0
+		displayFolder: Professional Diagnostics
+		lineageTag: 1597318f-4922-4982-85be-69fb217b999e
+
+	measure 'Avg Risk Score' = AVERAGE(customer_daily_metrics[churn_risk_score])
+		formatString: 0.0
+		displayFolder: Professional Diagnostics
+		lineageTag: 2045b198-1d00-4cc8-9c9c-9336c1e3bb4e
+
+	measure 'Max Risk Score' = MAX(customer_daily_metrics[churn_risk_score])
+		formatString: 0
+		displayFolder: Professional Diagnostics
+		lineageTag: 81b201b6-b170-400d-956b-dece23136f8e
+
+	measure 'Total Usage GB' = SUM(usage_logs_clean[data_usage_gb])
+		formatString: #,0
+		displayFolder: Professional Diagnostics
+		lineageTag: 168e7366-4414-40fd-920a-393fa5428b63
+
+	measure 'Utilization Status' = VAR R=[Avg Congestion Ratio] RETURN IF(ISBLANK(R),"No telemetry",SWITCH(TRUE(),R<0.6,"Healthy",R<=0.8,"Moderate","High"))
+		displayFolder: Professional Diagnostics
+		lineageTag: 190b9578-c285-4231-ad9c-5d43e76ae041
+
+	measure 'Utilization Color' = VAR R=[Avg Congestion Ratio] RETURN IF(ISBLANK(R),"#94A3B8",SWITCH(TRUE(),R<0.6,"#149C8B",R<=0.8,"#E5A028","#D94668"))
+		displayFolder: Professional Diagnostics
+		lineageTag: ac0f4d8d-3e12-4b5d-9ec5-3e74ef392220
+
+	measure 'Network Coverage Summary' = FORMAT([Monitored OLTs],"0") & " / " & FORMAT([Total OLTs],"0") & " OLTs monitored | 24h average estimate; peak congestion unavailable"
+		displayFolder: Professional Diagnostics
+		lineageTag: 9c68f532-4e00-45df-85f0-280ea7123377
+
+	measure 'Executive Insight' = FORMAT([High Risk Customers],"0") & " customers had high-risk observations. " & FORMAT([Complaint Leakage Customers],"0") & " complaint leakage cases in the selected period."
+		displayFolder: Professional Diagnostics
+		lineageTag: 56020d84-5e0f-4933-948e-a7fc60892f65
+
+	measure 'Worst Risk Customers' = VAR Category = SELECTEDVALUE(customer_daily_metrics[churn_risk_category]) VAR PerCustomer = CALCULATETABLE(SUMMARIZE(customer_daily_metrics,customer_daily_metrics[customer_id],"Worst",MAX(customer_daily_metrics[churn_risk_score])),ALLSELECTED(customer_daily_metrics[churn_risk_category])) RETURN COUNTROWS(FILTER(PerCustomer,SWITCH(TRUE(),[Worst]>=70,"High Risk",[Worst]>=40,"Medium Risk","Low Risk")=Category))
+		formatString: #,0
+		displayFolder: Professional Diagnostics
+		lineageTag: 7a1b2851-e095-4e7b-ab66-9534bfa030c5
+
+	column Value
+		dataType: int64
+		isHidden
+		lineageTag: c968edbb-64b4-4169-b8a0-d84bace6410d
+		sourceColumn: Value
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Value=Int64.Type],{{1}})
+

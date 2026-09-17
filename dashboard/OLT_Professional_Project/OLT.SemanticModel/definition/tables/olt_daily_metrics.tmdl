@@ -1,0 +1,57 @@
+table olt_daily_metrics
+	lineageTag: 63f33476-8ec4-4f19-a8d1-4a22e666e828
+
+	column olt_id
+		dataType: string
+		lineageTag: 0e6520f0-1617-42d8-81ab-a0868404d532
+		summarizeBy: none
+		sourceColumn: olt_id
+
+	column log_date
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: fe202c7b-73c4-4cc8-8a8d-94015428d13e
+		summarizeBy: none
+		sourceColumn: log_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_usage_gb
+		dataType: int64
+		lineageTag: eba85989-668a-40a6-9274-ead08d2f3429
+		summarizeBy: none
+		sourceColumn: total_usage_gb
+
+	column capacity_gbps
+		dataType: int64
+		lineageTag: 370c7819-530b-4f8b-b88b-cc656dc816e8
+		summarizeBy: none
+		sourceColumn: capacity_gbps
+
+	column avg_gbps
+		dataType: double
+		lineageTag: 6e16173b-ec0b-4560-9725-d8b7985291db
+		summarizeBy: none
+		sourceColumn: avg_gbps
+
+	column congestion_ratio_percent
+		dataType: double
+		lineageTag: 3a75c3fe-ed47-455a-b1da-4242906ecf0e
+		summarizeBy: none
+		sourceColumn: congestion_ratio_percent
+
+	column congestion_status
+		dataType: string
+		lineageTag: 3f7bc4e2-23b2-43a4-9723-503a51d0fc64
+		summarizeBy: none
+		sourceColumn: congestion_status
+
+	partition olt_daily_metrics = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\olt_daily_metrics.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Typed = Table.TransformColumnTypes(Headers,{{"olt_id", type text},{"log_date", type date},{"total_usage_gb", Int64.Type},{"capacity_gbps", Int64.Type},{"avg_gbps", type number},{"congestion_ratio_percent", type number},{"congestion_status", type text}},"en-US")
+				in Typed
+

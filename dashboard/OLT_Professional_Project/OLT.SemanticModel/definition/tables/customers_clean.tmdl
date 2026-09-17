@@ -1,0 +1,82 @@
+table customers_clean
+	lineageTag: 3178684f-4f10-45e2-8762-89fbcc2c8a59
+
+	column customer_id
+		dataType: string
+		lineageTag: ced9b90b-fa1a-4dfe-bca1-1372f7eff2e0
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column plan_id
+		dataType: string
+		lineageTag: 73096356-32b3-4c93-8083-f6e764ba8571
+		summarizeBy: none
+		sourceColumn: plan_id
+
+	column olt_id
+		dataType: string
+		lineageTag: e650f87f-7bf4-4451-9e16-6b790f59d39a
+		summarizeBy: none
+		sourceColumn: olt_id
+
+	column activation_date
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 8abaf4b4-671e-46b1-ac60-3d7871ae2eb8
+		summarizeBy: none
+		sourceColumn: activation_date
+
+		variation Variation
+			isDefault
+			relationship: 93954fd0-c1e5-4f8b-b7d4-a0ba113c0dfe
+			defaultHierarchy: LocalDateTable_697409eb-a260-466c-97d7-d16c449c8fbd.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status
+		dataType: string
+		lineageTag: 64737343-1de5-4dd1-90ac-13921c66d583
+		summarizeBy: none
+		sourceColumn: status
+
+	column customer_type
+		dataType: string
+		lineageTag: 962d2eb7-5831-4c57-8863-11b96fac369f
+		summarizeBy: none
+		sourceColumn: customer_type
+
+	column connection_count_per_customer
+		dataType: int64
+		lineageTag: b363d9f6-a934-4883-a804-b2f911c8be43
+		summarizeBy: sum
+		sourceColumn: connection_count_per_customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column plan_tier
+		dataType: string
+		lineageTag: f95ab632-7119-42d2-be5b-8f5592b1e333
+		summarizeBy: none
+		sourceColumn: plan_tier
+
+	column value_segment
+		dataType: string
+		lineageTag: 16f88d99-3fb0-4e8d-9f72-54bd8bfe5fc2
+		summarizeBy: none
+		sourceColumn: value_segment
+
+	column area
+		dataType: string
+		lineageTag: 309144f8-8aa0-4995-a57f-af88d4f16bd6
+		summarizeBy: none
+		sourceColumn: area
+
+	partition customers_clean = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\customers_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Typed = Table.TransformColumnTypes(Headers,{{"customer_id", type text},{"plan_id", type text},{"olt_id", type text},{"activation_date", type date},{"status", type text},{"customer_type", type text},{"connection_count_per_customer", Int64.Type},{"plan_tier", type text},{"value_segment", type text},{"area", type text}},"en-US")
+				in Typed
+

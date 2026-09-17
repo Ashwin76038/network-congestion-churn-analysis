@@ -1,0 +1,56 @@
+{
+  "name": "OLTTheme",
+  "dataColors": [
+    "#A78BFA",
+    "#35CFA3",
+    "#F4BD50",
+    "#F27683",
+    "#55BDEB"
+  ],
+  "background": "#0D0D0F",
+  "foreground": "#F3F4F6",
+  "tableAccent": "#A78BFA",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F4F6"
+              }
+            },
+            "fontSize": 12
+          }
+        ],
+        "categoryAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#BDC2CE"
+              }
+            }
+          }
+        ],
+        "valueAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#BDC2CE"
+              }
+            }
+          }
+        ],
+        "legend": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#BDC2CE"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "source_rows": {
+    "customers": 1280,
+    "plans_raw_duplicate": 1280,
+    "plans": 4,
+    "usage_logs": 6400,
+    "olt_info": 12,
+    "olt_traffic": 50
+  },
+  "clean_rows": {
+    "customers_clean": 1280,
+    "plans_clean": 4,
+    "usage_logs_clean": 6400,
+    "olt_info_clean": 12,
+    "complaints": 805,
+    "customer_daily_metrics": 6400,
+    "olt_daily_metrics": 50
+  },
+  "pii_columns": {
+    "customers.xlsx": [
+      "customer",
+      "mobile",
+      "email",
+      "address",
+      "service_number",
+      "frservice_code",
+      "assign_to",
+      "customer_clean",
+      "OLT IP"
+    ],
+    "plan.csv": [
+      "subscription_plan may contain source-system labels; duplicated dimension is not used"
+    ]
+  },
+  "key_checks": {
+    "customers_customer_id_unique": true,
+    "usage_customer_id_log_date_unique": true,
+    "plans_plan_id_unique": true,
+    "olt_olt_id_unique": true,
+    "customers_plan_join_coverage": 1.0,
+    "customers_olt_join_coverage": 1.0,
+    "usage_customer_join_coverage": 1.0,
+    "usage_olt_join_coverage": 1.0
+  },
+  "metric_checks": {
+    "experience_score_min": 62.5,
+    "experience_score_max": 100.0,
+    "churn_risk_score_min": 0.0,
+    "churn_risk_score_max": 75.0,
+    "risk_category_distribution": {
+      "Low Risk": 5905,
+      "Medium Risk": 490,
+      "High Risk": 5
+    },
+    "congestion_status_distribution": {
+      "High": 50
+    }
+  }
+}

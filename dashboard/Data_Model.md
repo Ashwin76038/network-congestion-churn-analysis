@@ -1,0 +1,71 @@
+# Power BI Data Model
+
+The Professional report reuses the established TMDL model. All core relationships are active, single direction, one-to-many. DateTable is a marked time table with a unique date column, Year, Month Number, Month (sorted by Month Number), and Year Month. Dates cover the supplied five-day window; extend the date query when new data arrives.
+
+```mermaid
+erDiagram
+ plans_clean ||--o{ customers_clean : plan_id
+ olt_info_clean ||--o{ customers_clean : assigned_olt
+ olt_info_clean ||--o{ olt_daily_metrics : logged_olt
+ customers_clean ||--o{ customer_daily_metrics : customer_id
+ customers_clean ||--o{ usage_logs_clean : customer_id
+ customers_clean ||--o{ complaints : customer_id
+ DateTable ||--o{ customer_daily_metrics : date
+ DateTable ||--o{ olt_daily_metrics : date
+ DateTable ||--o{ usage_logs_clean : date
+ DateTable ||--o{ complaints : date
+```
+
+Customers, plans and OLTs are dimensions. Usage and customer metrics have customer-date grain; OLT metrics have OLT-date grain; complaints have event grain. No direct customer-fact-to-network-fact relationship is added. Risk filters do not artificially restrict network facts. Total Customers remains the selected dimension population.
+
+Usage logs is related and available through Total Usage GB, but no redundant usage chart is added: daily metrics already contains the same usage, and five days cannot support the prior seven-day-drop interpretation.
+
+## Executable Relationships
+```tmdl
+relationship 7d951910-a772-4b4a-9130-139ef59b164b
+	fromColumn: customers_clean.plan_id
+	toColumn: plans_clean.plan_id
+
+relationship 4410dac8-8f48-47c8-a730-32c09fdfa3fa
+	fromColumn: customers_clean.olt_id
+	toColumn: olt_info_clean.olt_id
+
+relationship e0e5010f-ea73-42e3-b017-b6f59beb5726
+	fromColumn: olt_daily_metrics.olt_id
+	toColumn: olt_info_clean.olt_id
+
+relationship e5bb4938-5dca-4ea8-9448-90f51b212422
+	fromColumn: customer_daily_metrics.customer_id
+	toColumn: customers_clean.customer_id
+
+relationship e62746f0-b6f9-4cc9-a15b-ad798b37237b
+	fromColumn: usage_logs_clean.customer_id
+	toColumn: customers_clean.customer_id
+
+relationship 7ba5033a-1375-4dee-bdbf-ea64cd7397e2
+	fromColumn: complaints.customer_id
+	toColumn: customers_clean.customer_id
+
+relationship bc70e42a-f6e0-426f-bfda-99752cb9cbd8
+	fromColumn: customer_daily_metrics.log_date
+	toColumn: DateTable.Date
+
+relationship a29e07d9-a997-4e4d-9420-c0ba1efa25bc
+	fromColumn: usage_logs_clean.log_date
+	toColumn: DateTable.Date
+
+relationship 7d5063ab-ccbe-4ad9-b796-c37d33415e2e
+	fromColumn: olt_daily_metrics.log_date
+	toColumn: DateTable.Date
+
+relationship 548bf4d7-0da9-4fc1-8575-e88855789e5c
+	fromColumn: complaints.complaint_date
+	toColumn: DateTable.Date
+
+relationship 93954fd0-c1e5-4f8b-b7d4-a0ba113c0dfe
+	joinOnDateBehavior: datePartOnly
+	fromColumn: customers_clean.activation_date
+	toColumn: LocalDateTable_697409eb-a260-466c-97d7-d16c449c8fbd.Date
+
+
+```

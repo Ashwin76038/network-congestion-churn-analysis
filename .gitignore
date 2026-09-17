@@ -1,0 +1,44 @@
+# Raw or sensitive data
+data/raw/*
+!data/raw/README.md
+*customers.xlsx
+*usage_logs.xlsx
+*olt_traffic.xlsx
+*olt_info.xlsx
+*plan.csv
+*real*
+*pii*
+
+# Root-level source extracts are retained locally only.
+/customers.xlsx
+/usage_logs.csv
+/usage_logs.xlsx
+/olt_info.csv
+/olt_info.xlsx
+/olt_traffic.xlsx
+/plan.csv
+/plans.csv
+
+# Power BI files can contain embedded data. Commit only after privacy review.
+*.pbix
+*.pbit
+!dashboard/OLT_Churn_Network_Risk_Professional.pbix
+
+# Power BI Desktop local caches and generated workspace state
+**/.pbi/
+**/.cache/
+**/bin/
+**/obj/
+
+# Superseded prototype retained locally; publish the Professional project only.
+dashboard/OLT_Automation/
+
+# Local working area
+work/
+
+# Local secrets and caches
+.env
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/

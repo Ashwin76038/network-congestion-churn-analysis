@@ -1,0 +1,30 @@
+table olt_info_clean
+	lineageTag: e230e279-34f2-4d73-8c8f-8b58487e865b
+
+	column olt_id
+		dataType: string
+		lineageTag: b6e10fc7-7978-4cba-8dbb-cfbfc76869fa
+		summarizeBy: none
+		sourceColumn: olt_id
+
+	column olt_name
+		dataType: string
+		lineageTag: 4d4272d2-3267-48bd-a995-58cc6c516528
+		summarizeBy: none
+		sourceColumn: olt_name
+
+	column capacity_gbps
+		dataType: int64
+		lineageTag: a62f8f12-2ef6-47b1-be9b-e7afbe1650a5
+		summarizeBy: none
+		sourceColumn: capacity_gbps
+
+	partition olt_info_clean = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\olt_info_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Typed = Table.TransformColumnTypes(Headers,{{"olt_id", type text},{"olt_name", type text},{"capacity_gbps", Int64.Type}},"en-US")
+				in Typed
+

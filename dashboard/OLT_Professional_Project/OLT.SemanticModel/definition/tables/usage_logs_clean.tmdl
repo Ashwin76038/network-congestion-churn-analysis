@@ -1,0 +1,69 @@
+table usage_logs_clean
+	lineageTag: 3be5d67b-31cf-4679-b75b-cbde8bd232d8
+
+	column customer_id
+		dataType: string
+		lineageTag: 1b1802bb-cf75-4a26-9bae-5a24093f76d7
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column olt_id
+		dataType: string
+		lineageTag: c4b086bd-2354-4691-9dcd-ca3df8f275df
+		summarizeBy: none
+		sourceColumn: olt_id
+
+	column log_date
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 26b14ed6-a5d8-483b-ad66-bbab0ce59f4b
+		summarizeBy: none
+		sourceColumn: log_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column plan_tier
+		dataType: string
+		lineageTag: f5def6cf-643b-4240-aa97-a10d2523d554
+		summarizeBy: none
+		sourceColumn: plan_tier
+
+	column value_segment
+		dataType: string
+		lineageTag: 12c004af-1221-43b4-a7cf-3007821cc1d6
+		summarizeBy: none
+		sourceColumn: value_segment
+
+	column data_usage_gb
+		dataType: int64
+		lineageTag: ac504f13-0de7-4505-8193-239af506a631
+		summarizeBy: none
+		sourceColumn: data_usage_gb
+
+	column avg_speed_mbps
+		dataType: int64
+		lineageTag: 0ed98b4f-d0f3-436d-91e4-03f83fa1adab
+		summarizeBy: none
+		sourceColumn: avg_speed_mbps
+
+	column downtime_minutes
+		dataType: int64
+		lineageTag: 7da0dc3d-c185-4fa5-8f1f-f5760821568a
+		summarizeBy: none
+		sourceColumn: downtime_minutes
+
+	column latency_ms
+		dataType: int64
+		lineageTag: b3b0e9c7-9849-4b1d-bae4-98a26bf97f89
+		summarizeBy: none
+		sourceColumn: latency_ms
+
+	partition usage_logs_clean = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\usage_logs_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Typed = Table.TransformColumnTypes(Headers,{{"customer_id", type text},{"olt_id", type text},{"log_date", type date},{"plan_tier", type text},{"value_segment", type text},{"data_usage_gb", Int64.Type},{"avg_speed_mbps", Int64.Type},{"downtime_minutes", Int64.Type},{"latency_ms", Int64.Type}},"en-US")
+				in Typed
+

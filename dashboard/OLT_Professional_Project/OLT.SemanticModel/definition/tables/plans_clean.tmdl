@@ -1,0 +1,42 @@
+table plans_clean
+	lineageTag: c0ff5615-b7b4-46f0-ac3c-e19fe9c40cf1
+
+	column plan_id
+		dataType: string
+		lineageTag: e31c5b53-4252-4040-8533-eb2e40da1b98
+		summarizeBy: none
+		sourceColumn: plan_id
+
+	column plan_tier
+		dataType: string
+		lineageTag: 1a50db9a-5a0d-4309-9ef8-1472e3b1b924
+		summarizeBy: none
+		sourceColumn: plan_tier
+
+	column value_segment
+		dataType: string
+		lineageTag: f5a43550-4ce3-4dac-a220-3ff870f8b206
+		summarizeBy: none
+		sourceColumn: value_segment
+
+	column speed_mbps
+		dataType: int64
+		lineageTag: 2d4e6836-2313-4df9-9f91-c4c894f55dc7
+		summarizeBy: none
+		sourceColumn: speed_mbps
+
+	column monthly_price
+		dataType: int64
+		lineageTag: a25bf1d2-1de2-4aa2-ae82-b2eb05e85c14
+		summarizeBy: none
+		sourceColumn: monthly_price
+
+	partition plans_clean = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\plans_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Typed = Table.TransformColumnTypes(Headers,{{"plan_id", type text},{"plan_tier", type text},{"value_segment", type text},{"speed_mbps", Int64.Type},{"monthly_price", Int64.Type}},"en-US")
+				in Typed
+

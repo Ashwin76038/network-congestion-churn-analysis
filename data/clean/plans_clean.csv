@@ -1,0 +1,5 @@
+plan_id,plan_tier,value_segment,speed_mbps,monthly_price
+1,Free,free_plan,30,0
+2,Basic,low_value,50,199
+3,Standard,mid_value,100,499
+4,Premium,high_value,200,849
