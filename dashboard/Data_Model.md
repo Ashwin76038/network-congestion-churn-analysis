@@ -16,7 +16,7 @@ erDiagram
  DateTable ||--o{ complaints : date
 ```
 
-Customers, plans and OLTs are dimensions. Usage and customer metrics have customer-date grain; OLT metrics have OLT-date grain; complaints have event grain. No direct customer-fact-to-network-fact relationship is added. Risk filters do not artificially restrict network facts. Total Customers remains the selected dimension population.
+Customers, plans and OLTs are dimensions. Usage and customer metrics have account-date grain; OLT metrics have OLT-date grain; complaints have event grain. No direct customer-fact-to-network-fact relationship is added. Risk filters do not artificially restrict network facts. The legacy Total Customers measure counts distinct observed account IDs in customer_daily_metrics for the selected context, not the unfiltered dimension population.
 
 Usage logs is related and available through Total Usage GB, but no redundant usage chart is added: daily metrics already contains the same usage, and five days cannot support the prior seven-day-drop interpretation.
 
