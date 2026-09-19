@@ -1,221 +1,68 @@
-# OLT Churn & Network Risk Analytics Dashboard
+# Network Congestion & Customer Risk Analysis
 
-## 1. Business Problem
+Connect service experience, usage and network load to an explainable operational review workflow.
 
-An ISP needs a clear way to connect network experience, OLT congestion, silent complaints, and customer retention risk. Without this view, overloaded network areas and unhappy customers can stay hidden until churn has already happened.
+![Public-data analytical overview](images/01-network-overview.png)
 
-Headline findings before dashboard slicers:
+*Reproducible Python figure; Power BI refresh remains pending.*
 
-- Total customers analyzed: **1,280**
-- High-risk customers: **5 (0.4%)**
-- Average experience score: **89.1/100**
-- Complaint leakage cases: **0**
-- Average estimated 24-hour OLT utilization: **9.8%**, across **10 of 12 OLTs** with telemetry. Peak congestion is unavailable.
+## Executive summary
 
-## 2. Project Objective
+The public sample contains **1,280 service accounts**, **6,400 daily observations**, and **five dates (1-5 August 2026)**. Rebuilt daily-average utilization is **9.83% across 10 of 12 OLTs**. Full customer-risk scoring is **unavailable** because comparing separate seven-day usage windows requires fourteen days.
 
-Build a telecom analytics report with an Executive Overview and Network & Churn Analysis page, supported by anonymized data, explainable risk metrics, and documented measurement limits.
+## Business questions
 
-## 3. Data Privacy
+- What service-experience patterns need investigation?
+- Which OLTs have daily usage coverage, and what does that coverage miss?
+- Can complaint events be joined without using future information?
+- Is there enough history to score changes in customer behavior?
 
-The original files contained customer names, mobile numbers, emails, full addresses, service numbers, staff names, and raw OLT IPs. These fields are removed or generalized in the clean dataset. Customer identifiers are replaced with `Customer_00001` format. Full addresses are reduced to area-level values only.
+## Findings and actions
 
-Raw data is withheld from the repository. See `data/raw/README.md` and `.gitignore`.
+| Finding | Evidence | Decision |
+|---|---|---|
+| Insufficient behavioral history | 0 of 6,400 rows have two complete seven-day windows | Collect at least fourteen consecutive days before full scoring |
+| OLT assignments conflict | 1,135 accounts have logged/assigned OLT disagreement | Reconcile the source mapping before targeting interventions |
+| Coverage is incomplete | 10/12 OLTs have observations | Obtain data for missing OLTs; do not treat absent data as healthy |
+| Daily average is modest | 9.83% mean utilization; no peak measurements | Collect interval throughput before capacity decisions |
+| Complaint leakage is unproven | 0 rule matches; complaints are synthetic | Demonstrate the rule without claiming support completeness |
 
-## 4. Data & Assumptions
+## Data and privacy
 
-The source data represents a small ISP/FTTH environment with customers, plans, daily usage logs, OLT metadata, and OLT traffic. Complaint records are simulated because complaint leakage requires examples of poor-service customers who may or may not complain.
+Public tables use pseudonymous account IDs and omit direct contact identifiers. See [data authenticity](docs/data_authenticity.md): complaint events are generated; provenance of supplied usage/performance measurements is unresolved. Do not characterize the entire sample as verified real operations. Pseudonymization is not a guarantee against linkage.
 
-This project does **not** claim to predict real churn. It creates a rule-based customer risk proxy using network and behavior signals.
+## Method and KPIs
 
-## 5. Data Model
+| KPI | Definition | Limit |
+|---|---|---|
+| Experience score | 0.5 speed score + 0.3 downtime score + 0.2 latency score | Analyst-defined thresholds |
+| Daily utilization | GB * 8 / 86400 / capacity Gbps | Average, not peak congestion |
+| Usage drop | (prior 7-day mean - current 7-day mean) / prior mean | Two complete, disjoint windows required |
+| Complaint leakage | Experience <50 and zero as-of 30-day complaints | Simulated complaints |
+| Customer risk score | Weighted five-signal rule | Blank with insufficient history; not churn prediction |
 
-Core relationships:
+See [methodology](docs/methodology.md), [dictionary](docs/data_dictionary.md) and [model](dashboard/Data_Model.md). Customer/date and OLT/date facts join their dimensions one-to-many. Duplicate keys and invalid capacities fail the rebuild.
 
-- `plans_clean[plan_id]` to `customers_clean[plan_id]`
-- `customers_clean[customer_id]` to `customer_daily_metrics[customer_id]`
-- `customers_clean[customer_id]` to `complaints[customer_id]`
-- `olt_info_clean[olt_id]` to `customers_clean[olt_id]`
-- `olt_info_clean[olt_id]` to `olt_daily_metrics[olt_id]`
+## Reproduce from public data
 
-## 6. Tools Used
-
-- Python: cleaning, complaint simulation, metric engineering, validation
-- pandas and numpy: transformation and scoring
-- Jupyter: EDA and light modeling notebook
-- SQL: business-query proof layer
-- Power BI: dashboard design and DAX plan
-
-## 7. Methodology
-
-1. Audit source files for PII.
-2. Create anonymized clean tables at correct analytical grains.
-3. Simulate complaint records for a controlled share of poor-service customers.
-4. Build daily customer metrics and daily OLT congestion metrics.
-5. Validate grains, keys, score ranges, joins, and headline KPIs.
-6. Document SQL, Power BI measures, dashboard layout, and business insights.
-
-## 8. Metrics & Formulas
-
-### Congestion Ratio
-
-`avg_gbps = (total_usage_gb * 8) / (24 * 3600)`
-
-`congestion_ratio_percent = avg_gbps / capacity_gbps`
-
-The Professional dashboard uses the validated rebuilt OLT facts under `dashboard/OLT_Professional_Project/data/`. The ratio is stored as a decimal and formatted as a percentage. This is a daily average utilization estimate, not peak congestion. The original clean OLT percentage fields are invalid for the dashboard.
-
-### Experience Score
-
-`experience_score = 0.5 * speed_score + 0.3 * downtime_score + 0.2 * latency_score`
-
-### Usage Drop Percent
-
-`usage_drop_percent = ((previous_7d_avg - current_7d_avg) / previous_7d_avg) * 100`
-
-### Complaint Leakage
-
-`complaint_leakage_flag = 1` when `experience_score < 50` and `complaint_count = 0`.
-
-### Churn Risk Score
-
-`30% usage drop + 25% downtime + 20% latency + 15% low experience + 10% complaint leakage`
-
-Risk categories: `0-39 Low`, `40-69 Medium`, `70-100 High`.
-
-## Dashboard
-
-Working report: `dashboard/OLT_Churn_Network_Risk_Professional.pbix`. The original PBIX remains a rollback copy. The editable report/model project is under `dashboard/OLT_Professional_Project/`.
-
-### Executive Overview
-
-An executive view of customer churn exposure, experience quality, estimated network utilization, complaint leakage, and customer segment risk. Distribution charts count each customer once at their highest observed risk within the selected context.
-
-![Executive Overview](dashboard/screenshots/executive_overview.png)
-
-### Network & Churn Analysis
-
-Detailed OLT utilization, customer experience/risk relationships, downtime, complaint leakage status, and customers requiring attention. Downtime and latency contribute to the risk score; their association with risk is descriptive, not evidence of causality.
-
-![Network & Churn Analysis](dashboard/screenshots/network_churn_analysis.png)
-
-## 10. Key Insights & Recommendations
-
-### Insight 1: OLT congestion
-
-Finding: The prior extreme congestion values were invalid. Rebuilt telemetry averages 9.8% daily utilization; this does not establish peak-hour health.
-
-Why it matters: Sustained congestion can lower speeds and increase latency for customers on that OLT.
-
-Limitation: Daily customer usage was converted to an average throughput estimate; no peak throughput was supplied.
-
-Recommendation: Obtain interval/peak throughput and resolve the assigned/logged OLT mismatch before making capacity investments. OLTs 11 and 12 lack daily telemetry.
-
-Expected business impact: Better network experience and fewer customers moving into risk categories.
-
-### Insight 2: Complaint leakage
-
-Finding: 0 latest-date customer records show poor experience with no complaint record.
-
-Why it matters: These customers may be dissatisfied but invisible to support workflows.
-
-Interpretation: No supplied experience score falls below the leakage threshold. Zero cases do not demonstrate that complaint logging is complete; complaint records are simulated.
-
-Recommendation: Create a proactive outreach list from `complaint_leakage_flag = 1`.
-
-Expected business impact: Retention teams can contact silent-risk customers before churn.
-
-### Insight 3: Usage drop
-
-Finding: Usage drop contributes 30 points to the risk score and helps detect behavior changes before cancellation.
-
-Why it matters: A sharp decline in usage may signal disengagement or unresolved service problems.
-
-Likely reason: Reduced service quality, customer dissatisfaction, or changing customer need.
-
-Recommendation: Review customers with `high_usage_drop_flag = 1` alongside OLT and complaint status.
-
-Expected business impact: Better prioritization of retention outreach.
-
-### Insight 4: Downtime impact
-
-Finding: Downtime is one of the strongest service-quality risk signals, weighted at 25 points.
-
-Why it matters: Outages create direct customer pain and can drive complaints or silent churn risk.
-
-Likely reason: Local network instability, overloaded infrastructure, or unresolved field issues.
-
-Recommendation: Track high-downtime customers by OLT and prioritize repeated offenders.
-
-Expected business impact: Fewer avoidable escalations and improved customer experience.
-
-### Insight 5: Latency impact
-
-Finding: High latency contributes 20 points to the customer risk score.
-
-Why it matters: Latency-sensitive activities like calls, video, gaming, and work apps can feel poor even when usage volume remains high.
-
-Likely reason: Congestion or network routing/performance issues.
-
-Recommendation: Add latency monitoring to the operational dashboard and investigate high-latency OLTs.
-
-Expected business impact: Faster isolation of poor-experience zones.
-
-### Insight 6: High-risk customer segment
-
-Finding: The highest average latest-date risk score appears in `free_plan`.
-
-Why it matters: Segment-level risk helps target retention offers and network actions.
-
-Likely reason: Segment mix may combine high expectations, high usage, or greater sensitivity to service degradation.
-
-Recommendation: Compare risk by value segment in Power BI before campaign design.
-
-Expected business impact: More focused customer retention spend.
-
-## 11. SQL Analysis
-
-Business SQL queries are stored in `sql/queries.sql`, including joins, risk grouping, rolling averages, OLT ranking, complaint leakage, and KPI validation.
-
-## 12. Python Analysis
-
-Runnable scripts:
-
-- `scripts/01_clean_data.py`
-- `scripts/02_generate_complaints.py`
-- `scripts/03_build_metrics.py`
-
-Notebook:
-
-- `notebooks/eda_and_modeling.ipynb`
-
-## 13. How to Reproduce
-
-1. Create a local virtual environment.
-2. Install requirements: `pip install -r requirements.txt`
-3. Place private raw source files in `data/raw/`.
-4. Run `python scripts/01_clean_data.py`
-5. Run `python scripts/02_generate_complaints.py`
-6. The original `scripts/03_build_metrics.py` depends on private raw OLT traffic and is not the Professional report build path. Use the validated Professional project datasets for the dashboard.
-7. Open `notebooks/eda_and_modeling.ipynb` for EDA and light modeling.
-8. Open the Professional PBIP, refresh, and save as the Professional PBIX. The original clean sources remain unchanged. The DateTable currently covers the supplied five days and must be extended when adding history.
-
-## 14. Project Structure
-
-```text
-olt-churn-analytics/
-├── README.md
-├── data/
-│   ├── raw/
-│   │   └── README.md
-│   ├── clean/
-│   └── sample/
-├── scripts/
-├── sql/
-├── notebooks/
-├── dashboard/
-│   └── screenshots/
-├── docs/
-├── requirements.txt
-└── .gitignore
+```bash
+python -m pip install -r requirements.txt
+python scripts/03_build_metrics.py
+python -m unittest discover -s tests -v
+python scripts/render_overview.py
+python scripts/validate_sql.py
 ```
+
+The rebuild updates clean and Power BI CSVs together, plus samples and [verified metrics](docs/validated_metrics.json). No private source is needed. `01_clean_data.py` is optional private-source preparation; never commit those inputs. `02_generate_complaints.py` is the documented synthetic generator.
+
+## Power BI report
+
+Editable source: `dashboard/OLT_Professional_Project/OLT_Churn_Network_Risk_Professional.pbip`. Set the `DataRoot` Power Query parameter to the checkout's `dashboard/OLT_Professional_Project/data/` folder, including its final slash. Refresh and review the report in Power BI Desktop.
+
+The old PBIX and screenshots were quarantined outside the repository because their risk counts predate the corrected metric definitions. A refreshed screenshot is pending; the source files are not claimed to have passed Desktop rendering tests. Legacy churn_* names and filenames are compatibility names only.
+
+## Repository structure and skills
+
+`data/clean/` holds public inputs and derived outputs; `scripts/` builds metrics; `tests/` covers edge cases; `sql/` contains executable SQLite analysis; `notebooks/` provides public EDA; `docs/` explains evidence and limits; `dashboard/` holds the editable Power BI model.
+
+Skills: Python, pandas, SQL window functions, DAX, dimensional modeling, data-quality validation and business communication. No measured retention improvement, predictive accuracy or causal effect is claimed.

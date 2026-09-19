@@ -1,113 +1,39 @@
--- Network Experience, OLT Congestion & Customer Risk Analytics
--- SQL examples assume a database schema with the clean CSV files loaded as tables.
+-- SQLite 3: execute after loading data/clean/*.csv with scripts/validate_sql.py.
+-- Counts are service-account keys, not verified people.
+SELECT COUNT(*) AS service_accounts FROM customers_clean;
 
--- 1. Business question: What does the combined customer, plan, usage, and OLT analysis view look like?
-SELECT
-    c.customer_id,
-    c.area,
-    p.plan_tier,
-    p.value_segment,
-    u.log_date,
-    u.data_usage_gb,
-    u.avg_speed_mbps,
-    u.downtime_minutes,
-    u.latency_ms,
-    m.experience_score,
-    m.churn_risk_score,
-    m.churn_risk_category,
-    o.olt_id,
-    o.capacity_gbps
-FROM customers_clean c
-JOIN plans_clean p ON c.plan_id = p.plan_id
-JOIN usage_logs_clean u ON c.customer_id = u.customer_id
-JOIN customer_daily_metrics m
-  ON u.customer_id = m.customer_id
- AND u.log_date = m.log_date
-JOIN olt_info_clean o ON c.olt_id = o.olt_id;
-
--- 2. Business question: How many customers are in each churn risk category before slicers?
-SELECT churn_risk_category, COUNT(DISTINCT customer_id) AS customers
-FROM customer_daily_metrics
-GROUP BY churn_risk_category
-ORDER BY customers DESC;
-
--- 3. Business question: What are rolling 7-day customer usage averages?
-WITH rolling_usage AS (
-    SELECT
-        customer_id,
-        log_date,
-        data_usage_gb,
-        AVG(data_usage_gb) OVER (
-            PARTITION BY customer_id
-            ORDER BY log_date
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
-        ) AS current_7d_avg
-    FROM usage_logs_clean
+-- Exclusive risk groups use one maximum complete score per account.
+WITH worst AS (
+ SELECT customer_id, MAX(churn_risk_score) AS risk_score
+ FROM customer_daily_metrics GROUP BY customer_id
 )
-SELECT *
-FROM rolling_usage
-ORDER BY customer_id, log_date;
+SELECT CASE WHEN risk_score IS NULL THEN 'Insufficient history'
+ WHEN risk_score >= 70 THEN 'High Risk' WHEN risk_score >= 40 THEN 'Medium Risk'
+ ELSE 'Low Risk' END AS risk_category, COUNT(*) AS service_accounts
+FROM worst GROUP BY risk_category;
 
--- 4. Business question: Which customers show the biggest drop versus the previous rolling average?
-WITH rolling_usage AS (
-    SELECT
-        customer_id,
-        log_date,
-        data_usage_gb,
-        AVG(data_usage_gb) OVER (
-            PARTITION BY customer_id
-            ORDER BY log_date
-            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
-        ) AS current_7d_avg
-    FROM usage_logs_clean
-),
-drop_calc AS (
-    SELECT
-        *,
-        LAG(current_7d_avg) OVER (PARTITION BY customer_id ORDER BY log_date) AS previous_7d_avg
-    FROM rolling_usage
+-- Explicitly separate assigned and logged OLT; never silently equate them.
+SELECT c.customer_id, c.olt_id AS assigned_olt, u.olt_id AS logged_olt,
+ u.log_date, u.data_usage_gb, m.experience_score, m.churn_risk_score
+FROM customers_clean c JOIN usage_logs_clean u USING(customer_id)
+JOIN customer_daily_metrics m ON m.customer_id=u.customer_id AND m.log_date=u.log_date;
+
+-- Complete, non-overlapping 7-calendar-day windows (integer Julian days).
+WITH windows AS (
+ SELECT customer_id, log_date,
+ AVG(data_usage_gb) OVER (PARTITION BY customer_id ORDER BY julianday(log_date) RANGE BETWEEN 6 PRECEDING AND CURRENT ROW) AS current_mean,
+ COUNT(data_usage_gb) OVER (PARTITION BY customer_id ORDER BY julianday(log_date) RANGE BETWEEN 6 PRECEDING AND CURRENT ROW) AS current_n,
+ AVG(data_usage_gb) OVER (PARTITION BY customer_id ORDER BY julianday(log_date) RANGE BETWEEN 13 PRECEDING AND 7 PRECEDING) AS prior_mean,
+ COUNT(data_usage_gb) OVER (PARTITION BY customer_id ORDER BY julianday(log_date) RANGE BETWEEN 13 PRECEDING AND 7 PRECEDING) AS prior_n
+ FROM usage_logs_clean
 )
-SELECT
-    customer_id,
-    log_date,
-    current_7d_avg,
-    previous_7d_avg,
-    CASE
-        WHEN previous_7d_avg IS NULL OR previous_7d_avg = 0 THEN NULL
-        ELSE ((previous_7d_avg - current_7d_avg) / previous_7d_avg) * 100
-    END AS usage_drop_percent
-FROM drop_calc
-ORDER BY usage_drop_percent DESC;
+SELECT customer_id,log_date,CASE WHEN current_n=7 AND prior_n=7 AND prior_mean>0
+ THEN (prior_mean-current_mean)*100.0/prior_mean END AS usage_drop_percent FROM windows;
 
--- 5. Business question: Which OLTs have the highest average congestion?
-SELECT
-    olt_id,
-    AVG(congestion_ratio_percent) AS avg_congestion_ratio_percent,
-    DENSE_RANK() OVER (ORDER BY AVG(congestion_ratio_percent) DESC) AS congestion_rank
-FROM olt_daily_metrics
-GROUP BY olt_id
-ORDER BY congestion_rank;
+-- Decimal ratios; multiply by 100 only for textual percentage display.
+SELECT olt_id,AVG(congestion_ratio) AS mean_daily_utilization,
+ DENSE_RANK() OVER (ORDER BY AVG(congestion_ratio) DESC) AS utilization_rank
+FROM olt_daily_metrics GROUP BY olt_id;
 
--- 6. Business question: Which customers have poor experience but no recorded complaint?
-SELECT
-    customer_id,
-    log_date,
-    experience_score,
-    complaint_count,
-    churn_risk_score,
-    churn_risk_category
-FROM customer_daily_metrics
-WHERE complaint_leakage_flag = 1
-ORDER BY experience_score ASC, churn_risk_score DESC;
-
--- 7. Business question: Do the headline KPIs match the README?
-SELECT
-    (SELECT COUNT(DISTINCT customer_id) FROM customers_clean) AS total_customers,
-    (SELECT COUNT(DISTINCT customer_id)
-     FROM customer_daily_metrics
-     WHERE churn_risk_category = 'High Risk') AS high_risk_customers,
-    (SELECT AVG(experience_score)
-     FROM customer_daily_metrics) AS avg_experience_score,
-    (SELECT SUM(complaint_leakage_flag)
-     FROM customer_daily_metrics) AS complaint_leakage_count,
-    (SELECT AVG(congestion_ratio_percent) FROM olt_daily_metrics) AS avg_congestion_ratio_percent;
+SELECT COUNT(DISTINCT customer_id) AS leakage_accounts
+FROM customer_daily_metrics WHERE complaint_leakage_flag=1;

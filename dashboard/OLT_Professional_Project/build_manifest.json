@@ -1,37 +1,5 @@
 {
-  "original_pbix": "C:\\Users\\Admin\\Documents\\Network Congestion and Churn analysis\\dashboard\\OLT_Churn_Network_Risk.pbix",
-  "original_sha256": "88246c58a5d93708cfc403df52c3dd207da61a82c4e16294d91fce92de2ab992",
-  "working_pbix": "C:\\Users\\Admin\\Documents\\Network Congestion and Churn analysis\\dashboard\\OLT_Churn_Network_Risk_Professional.pbix",
-  "completed": [
-    "Seven approved datasets and prior validation",
-    "Typed refreshable TMDL model",
-    "Existing DAX and active single-direction relationships",
-    "One-page PBIR prototype"
-  ],
-  "partially_completed": [
-    "Reset button and visual QA",
-    "Portfolio documentation with stale numerical claims"
-  ],
-  "not_completed_at_discovery": [
-    "Two-page light design",
-    "Final populated PBIX",
-    "Screenshot exports"
-  ],
-  "professional_pages": [
-    "Executive Overview",
-    "Network & Churn Analysis"
-  ],
-  "visual_count": 44,
-  "added_measures": [
-    "Avg Downtime Minutes",
-    "Avg Latency Ms",
-    "Avg Risk Score",
-    "Max Risk Score",
-    "Total Usage GB",
-    "Utilization Status",
-    "Utilization Color",
-    "Network Coverage Summary",
-    "Executive Insight",
-    "Worst Risk Customers"
-  ]
+  "status": "superseded",
+  "current_evidence": "docs/validated_metrics.json",
+  "power_bi_refresh": "pending"
 }

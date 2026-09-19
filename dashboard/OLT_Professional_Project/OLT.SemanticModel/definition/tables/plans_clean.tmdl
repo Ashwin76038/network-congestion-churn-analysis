@@ -35,7 +35,7 @@ table plans_clean
 		mode: import
 		source =
 				let
-				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\plans_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Source = Csv.Document(File.Contents(DataRoot & "plans_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
 				 Typed = Table.TransformColumnTypes(Headers,{{"plan_id", type text},{"plan_tier", type text},{"value_segment", type text},{"speed_mbps", Int64.Type},{"monthly_price", Int64.Type}},"en-US")
 				in Typed

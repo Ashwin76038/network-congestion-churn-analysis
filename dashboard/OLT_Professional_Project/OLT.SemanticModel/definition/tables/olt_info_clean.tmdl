@@ -23,7 +23,7 @@ table olt_info_clean
 		mode: import
 		source =
 				let
-				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\olt_info_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Source = Csv.Document(File.Contents(DataRoot & "olt_info_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
 				 Typed = Table.TransformColumnTypes(Headers,{{"olt_id", type text},{"olt_name", type text},{"capacity_gbps", Int64.Type}},"en-US")
 				in Typed

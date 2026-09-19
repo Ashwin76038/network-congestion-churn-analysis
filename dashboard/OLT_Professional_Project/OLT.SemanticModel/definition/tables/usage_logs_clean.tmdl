@@ -62,8 +62,8 @@ table usage_logs_clean
 		mode: import
 		source =
 				let
-				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\usage_logs_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Source = Csv.Document(File.Contents(DataRoot & "usage_logs_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				 Typed = Table.TransformColumnTypes(Headers,{{"customer_id", type text},{"olt_id", type text},{"log_date", type date},{"plan_tier", type text},{"value_segment", type text},{"data_usage_gb", Int64.Type},{"avg_speed_mbps", Int64.Type},{"downtime_minutes", Int64.Type},{"latency_ms", Int64.Type}},"en-US")
+				 Typed = Table.TransformColumnTypes(Headers,{{"customer_id", type text},{"olt_id", type text},{"log_date", type date},{"plan_tier", type text},{"value_segment", type text},{"data_usage_gb", type number},{"avg_speed_mbps", type number},{"downtime_minutes", type number},{"latency_ms", type number}},"en-US")
 				in Typed
 

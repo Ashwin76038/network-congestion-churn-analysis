@@ -1,17 +1,17 @@
 table _Measures
 	lineageTag: 4cf0de79-ad90-4c81-9dd5-cd0ddfb01bcc
 
-	measure 'Total Customers' = DISTINCTCOUNT(customers_clean[customer_id])
+	measure 'Total Customers' = DISTINCTCOUNT(customer_daily_metrics[customer_id])
 		formatString: #,0
 		displayFolder: Customer Experience & Risk
 		lineageTag: 2d93059c-9906-467f-815b-09dd84fe8e30
 
-	measure 'High Risk Customers' = COALESCE(CALCULATE(DISTINCTCOUNT(customer_daily_metrics[customer_id]), KEEPFILTERS(customer_daily_metrics[churn_risk_category] = "High Risk")),0)
+	measure 'High Risk Customers' = IF(COUNT(customer_daily_metrics[churn_risk_score])=0,BLANK(),COALESCE(CALCULATE(DISTINCTCOUNT(customer_daily_metrics[customer_id]), KEEPFILTERS(customer_daily_metrics[churn_risk_category] = "High Risk")),0))
 		formatString: #,0
 		displayFolder: Customer Experience & Risk
 		lineageTag: e23dcced-8525-46cc-93d5-3495f77bdc18
 
-	measure '% High Risk Customers' = DIVIDE([High Risk Customers],[Total Customers],0)
+	measure '% High Risk Customers' = DIVIDE([High Risk Customers],[Scored Accounts])
 		formatString: 0.0%
 		displayFolder: Customer Experience & Risk
 		lineageTag: 16228fd0-42fe-475f-a1e4-68cc7103d2c5
@@ -126,11 +126,11 @@ table _Measures
 		displayFolder: Professional Diagnostics
 		lineageTag: 9c68f532-4e00-45df-85f0-280ea7123377
 
-	measure 'Executive Insight' = FORMAT([High Risk Customers],"0") & " customers had high-risk observations. " & FORMAT([Complaint Leakage Customers],"0") & " complaint leakage cases in the selected period."
+	measure 'Executive Insight' = IF(COUNT(customer_daily_metrics[churn_risk_score])=0,"Full risk scoring unavailable: two complete seven-day windows required.",FORMAT([High Risk Customers],"0") & " service accounts had high-risk observations.")
 		displayFolder: Professional Diagnostics
 		lineageTag: 56020d84-5e0f-4933-948e-a7fc60892f65
 
-	measure 'Worst Risk Customers' = VAR Category = SELECTEDVALUE(customer_daily_metrics[churn_risk_category]) VAR PerCustomer = CALCULATETABLE(SUMMARIZE(customer_daily_metrics,customer_daily_metrics[customer_id],"Worst",MAX(customer_daily_metrics[churn_risk_score])),ALLSELECTED(customer_daily_metrics[churn_risk_category])) RETURN COUNTROWS(FILTER(PerCustomer,SWITCH(TRUE(),[Worst]>=70,"High Risk",[Worst]>=40,"Medium Risk","Low Risk")=Category))
+	measure 'Worst Risk Customers' = VAR Category = SELECTEDVALUE(customer_daily_metrics[churn_risk_category]) VAR PerCustomer = CALCULATETABLE(SUMMARIZE(customer_daily_metrics,customer_daily_metrics[customer_id],"Worst",MAX(customer_daily_metrics[churn_risk_score])),ALLSELECTED(customer_daily_metrics[churn_risk_category])) RETURN COUNTROWS(FILTER(PerCustomer,SWITCH(TRUE(),ISBLANK([Worst]),"Insufficient history",[Worst]>=70,"High Risk",[Worst]>=40,"Medium Risk","Low Risk")=Category))
 		formatString: #,0
 		displayFolder: Professional Diagnostics
 		lineageTag: 7a1b2851-e095-4e7b-ab66-9534bfa030c5
@@ -145,3 +145,6 @@ table _Measures
 		mode: import
 		source = #table(type table [Value=Int64.Type],{{1}})
 
+
+	measure 'Scored Accounts' = CALCULATE(DISTINCTCOUNT(customer_daily_metrics[customer_id]),FILTER(customer_daily_metrics,NOT ISBLANK(customer_daily_metrics[churn_risk_score])) )
+		formatString: #,0

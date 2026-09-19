@@ -50,7 +50,7 @@ table olt_daily_metrics
 		mode: import
 		source =
 				let
-				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\olt_daily_metrics.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Source = Csv.Document(File.Contents(DataRoot & "olt_daily_metrics.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
 				 Typed = Table.TransformColumnTypes(Headers,{{"olt_id", type text},{"log_date", type date},{"total_usage_gb", Int64.Type},{"capacity_gbps", Int64.Type},{"avg_gbps", type number},{"congestion_ratio_percent", type number},{"congestion_status", type text}},"en-US")
 				in Typed

@@ -75,7 +75,7 @@ table customers_clean
 		mode: import
 		source =
 				let
-				 Source = Csv.Document(File.Contents("C:\Users\Admin\Documents\Network Congestion and Churn analysis\dashboard\OLT_Professional_Project\data\customers_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Source = Csv.Document(File.Contents(DataRoot & "customers_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
 				 Typed = Table.TransformColumnTypes(Headers,{{"customer_id", type text},{"plan_id", type text},{"olt_id", type text},{"activation_date", type date},{"status", type text},{"customer_type", type text},{"connection_count_per_customer", Int64.Type},{"plan_tier", type text},{"value_segment", type text},{"area", type text}},"en-US")
 				in Typed

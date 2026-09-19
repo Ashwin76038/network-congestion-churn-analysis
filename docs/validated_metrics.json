@@ -1,0 +1,15 @@
+{
+  "service_accounts": 1280,
+  "daily_observations": 6400,
+  "date_start": "2026-08-01",
+  "date_end": "2026-08-05",
+  "days": 5,
+  "olts_total": 12,
+  "olts_observed": 10,
+  "mean_daily_utilization": 0.09833129629629632,
+  "mean_experience_score": 89.0703125,
+  "complete_risk_rows": 0,
+  "high_risk_accounts": null,
+  "complaint_leakage_accounts": 0,
+  "assigned_logged_olt_mismatch_accounts": 1135
+}

@@ -27,7 +27,7 @@ def extract_area(address: object) -> str:
     for token in tokens:
         if token in {"COIMBATORE", "METTUPALAYAM"}:
             return token.title()
-    return "Mettupalayam"
+    return "Unknown"
 
 
 def main() -> None:
