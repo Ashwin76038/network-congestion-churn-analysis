@@ -1,0 +1,93 @@
+{
+  "account_days": 6400,
+  "assigned_logged_mismatch_share": 0.88671875,
+  "assigned_logged_mismatched_account_days": 5675,
+  "assigned_logged_mismatched_accounts": 1135,
+  "complaint_leakage_account_keys": 0,
+  "complete_14_day_window_rows": 0,
+  "date_end": "2026-08-05",
+  "date_start": "2026-08-01",
+  "days_per_account_max": 5,
+  "days_per_account_min": 5,
+  "distinct_dates": 5,
+  "full_risk_score_rows": 0,
+  "historical_churn_outcome": "not available",
+  "independent_sql_reconciliation": "passed for mismatch and observed OLT coverage",
+  "maximum_observed_daily_average_utilization_decimal": 0.1798148148148148,
+  "mean_daily_average_utilization_decimal": 0.09833129629629626,
+  "mean_experience_score": 89.0703125,
+  "mismatch_by_assigned_olt": [
+    {
+      "assigned_olt_id": 1,
+      "mismatched_accounts": 400,
+      "service_accounts": 449
+    },
+    {
+      "assigned_olt_id": 2,
+      "mismatched_accounts": 176,
+      "service_accounts": 197
+    },
+    {
+      "assigned_olt_id": 3,
+      "mismatched_accounts": 30,
+      "service_accounts": 34
+    },
+    {
+      "assigned_olt_id": 4,
+      "mismatched_accounts": 21,
+      "service_accounts": 25
+    },
+    {
+      "assigned_olt_id": 5,
+      "mismatched_accounts": 128,
+      "service_accounts": 144
+    },
+    {
+      "assigned_olt_id": 6,
+      "mismatched_accounts": 119,
+      "service_accounts": 132
+    },
+    {
+      "assigned_olt_id": 7,
+      "mismatched_accounts": 143,
+      "service_accounts": 165
+    },
+    {
+      "assigned_olt_id": 8,
+      "mismatched_accounts": 16,
+      "service_accounts": 19
+    },
+    {
+      "assigned_olt_id": 9,
+      "mismatched_accounts": 59,
+      "service_accounts": 67
+    },
+    {
+      "assigned_olt_id": 10,
+      "mismatched_accounts": 33,
+      "service_accounts": 38
+    },
+    {
+      "assigned_olt_id": 11,
+      "mismatched_accounts": 7,
+      "service_accounts": 7
+    },
+    {
+      "assigned_olt_id": 12,
+      "mismatched_accounts": 3,
+      "service_accounts": 3
+    }
+  ],
+  "missing_logged_olt_ids": [
+    11,
+    12
+  ],
+  "observed_logged_olt_groups": 10,
+  "peak_throughput": "not observed",
+  "power_bi_execution": "not verified by this Python/SQLite audit",
+  "scope": "committed public sample; usage provenance unresolved; complaints synthetic",
+  "service_accounts": 1280,
+  "synthetic_complaint_events": 805,
+  "total_olt_groups": 12,
+  "unavailable_risk_rows": 6400
+}

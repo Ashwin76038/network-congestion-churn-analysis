@@ -1,6 +1,6 @@
-# Network Congestion & Customer Risk Analysis
+# Network Service Experience & Data Quality
 
-Connect service experience, usage and network load to an explainable operational review workflow.
+Audit service experience, OLT mapping and coverage before making network or customer-risk decisions. The repository name and some `churn_*` fields are legacy compatibility names; the published sample does not support churn prediction.
 
 ![Public-data analytical overview](images/01-network-overview.png)
 
@@ -8,7 +8,7 @@ Connect service experience, usage and network load to an explainable operational
 
 ## Executive summary
 
-The public sample contains **1,280 service accounts**, **6,400 daily observations**, and **five dates (1-5 August 2026)**. Rebuilt daily-average utilization is **9.83% across 10 of 12 OLTs**. Full customer-risk scoring is **unavailable** because comparing separate seven-day usage windows requires fourteen days.
+The public sample contains **1,280 service-account keys**, **6,400 daily observations**, and **five dates (1-5 August 2026)**. Rebuilt daily-average utilization is **9.83% across 10 of 12 OLTs**. Full customer-risk scoring is **unavailable** because comparing separate seven-day usage windows requires fourteen days. This is a data-readiness and service-experience case study; no peak congestion, observed churn or retention improvement is established.
 
 ## Business questions
 
@@ -27,6 +27,8 @@ The public sample contains **1,280 service accounts**, **6,400 daily observation
 | Daily average is modest | 9.83% mean utilization; no peak measurements | Collect interval throughput before capacity decisions |
 | Complaint leakage is unproven | 0 rule matches; complaints are synthetic | Demonstrate the rule without claiming support completeness |
 
+The independent [data-readiness receipt](docs/data_readiness_receipt.json) quantifies the mapping conflict as **1,135/1,280 accounts (88.67%)**, identifies OLT **11 and 12** as absent from logged usage despite assigned accounts, and confirms that the maximum observed **daily-average** ratio is 17.98%. The source meaning of the mismatch is unknown; do not reassign accounts based on this comparison alone. See the [quality review and action order](docs/data_readiness_review.md).
+
 ## Data and privacy
 
 Public tables use pseudonymous account IDs and omit direct contact identifiers. See [data authenticity](docs/data_authenticity.md): complaint events are generated; provenance of supplied usage/performance measurements is unresolved. Do not characterize the entire sample as verified real operations. Pseudonymization is not a guarantee against linkage.
@@ -43,6 +45,8 @@ Public tables use pseudonymous account IDs and omit direct contact identifiers. 
 
 See [methodology](docs/methodology.md), [dictionary](docs/data_dictionary.md) and [model](dashboard/Data_Model.md). Customer/date and OLT/date facts join their dimensions one-to-many. Duplicate keys and invalid capacities fail the rebuild.
 
+The five-day public sample is suitable for validating the pipeline and prioritizing source repairs. It is not suitable for publishing a high-risk customer count or claiming that a specific OLT caused poor service. If no longer, verified source data is obtained, keep the project focused on data quality and observed service experience.
+
 ## Reproduce from public data
 
 ```bash
@@ -51,15 +55,20 @@ python scripts/03_build_metrics.py
 python -m unittest discover -s tests -v
 python scripts/render_overview.py
 python scripts/validate_sql.py
+python scripts/audit_public.py
 ```
 
 The rebuild updates clean and Power BI CSVs together, plus samples and [verified metrics](docs/validated_metrics.json). No private source is needed. `01_clean_data.py` is optional private-source preparation; never commit those inputs. `02_generate_complaints.py` is the documented synthetic generator.
+
+For a read-only clean-clone verification path that does not rewrite the Power BI input copies, use [REPRODUCE_PUBLIC.md](docs/REPRODUCE_PUBLIC.md). `audit_public.py` checks raw/derived grains, capacity-ratio arithmetic, OLT coverage and assignment conflicts with an independent SQLite reconciliation.
 
 ## Power BI report
 
 Editable source: `dashboard/OLT_Professional_Project/OLT_Churn_Network_Risk_Professional.pbip`. Set the `DataRoot` Power Query parameter to the checkout's `dashboard/OLT_Professional_Project/data/` folder, including its final slash. Refresh and review the report in Power BI Desktop.
 
 The old PBIX and screenshots were quarantined outside the repository because their risk counts predate the corrected metric definitions. A refreshed screenshot is pending; the source files are not claimed to have passed Desktop rendering tests. Legacy churn_* names and filenames are compatibility names only.
+
+**Power BI validation remains pending:** Python, SQL and unit-test results do not prove DAX execution, slicer behavior or a current rendered report. No PBIP/TMDL/report files were changed during this data-readiness pass.
 
 ## Repository structure and skills
 
