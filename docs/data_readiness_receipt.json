@@ -1,5 +1,6 @@
 {
   "account_days": 6400,
+  "account_id_strategy": "generated sequential row labels; frozen sample/order only",
   "assigned_logged_mismatch_share": 0.88671875,
   "assigned_logged_mismatched_account_days": 5675,
   "assigned_logged_mismatched_accounts": 1135,
@@ -83,11 +84,13 @@
     12
   ],
   "observed_logged_olt_groups": 10,
-  "peak_throughput": "not observed",
+  "olt_scope_interpretation": "ten simulated usage IDs versus twelve source-address groups; not verified physical inventory",
+  "peak_throughput": "not observed; input usage is synthetic",
   "power_bi_execution": "not verified by this Python/SQLite audit",
-  "scope": "committed public sample; usage provenance unresolved; complaints synthetic",
+  "scope": "committed Excel-generated usage simulation; private customer-source metadata; complaints synthetic",
   "service_accounts": 1280,
   "synthetic_complaint_events": 805,
   "total_olt_groups": 12,
-  "unavailable_risk_rows": 6400
+  "unavailable_risk_rows": 6400,
+  "usage_classification": "synthetic, confirmed by project author"
 }

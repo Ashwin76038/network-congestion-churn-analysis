@@ -1,4 +1,5 @@
 {
+  "usage_classification": "synthetic Excel random values, confirmed by project author",
   "service_accounts": 1280,
   "daily_observations": 6400,
   "date_start": "2026-08-01",

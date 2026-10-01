@@ -4,22 +4,22 @@ Public keys are pseudonymous service-account labels, not independently verified 
 
 | Field | Type / example | Definition and source |
 |---|---|---|
-| customer_id | text; Customer_00001 | Pseudonymous supplied service row; primary key in customers_clean |
+| customer_id | text; Customer_00001 | Sequential row label filled down/generated for this sample; primary key in customers_clean, not a stable operational customer ID |
 | plan_id | integer | FK to four supplied plan tiers |
-| olt_id | integer | Assigned OLT in customers; logged OLT in usage/network tables; meanings differ |
+| olt_id | integer | Source-address group in customers versus selected simulation ID in usage/network tables; numeric equality does not prove common physical equipment |
 | activation_date | date | Intended meaning: internet plan/service activation, confirmed by author; 1,275 public values differ from original workbook and require reconciliation before cohort claims |
 | status | category | Supplied service state, not observed churn |
 | customer_type | category | Supplied customer grouping |
 | connection_count_per_customer | integer | Source attribute; do not sum across service rows |
 | plan_tier / value_segment | category | Derived from source plan_category; not unique product identifiers |
 | area | text | Generalized source geography; unknown stays unknown |
-| speed_mbps / monthly_price | number | Supplied plan metadata; billing provenance unverified |
-| olt_name / capacity_gbps | text / number | Generalized OLT label and supplied capacity |
-| log_date | ISO date | Daily observation date |
-| data_usage_gb | nonnegative number | Supplied daily volume, decimal GB assumption |
-| avg_speed_mbps | nonnegative number | Supplied average speed |
-| downtime_minutes | nonnegative number | Supplied daily downtime |
-| latency_ms | nonnegative number | Supplied latency |
+| speed_mbps / monthly_price | number | Scenario plan-tier metadata; not verified individual tariff/billing records |
+| olt_name / capacity_gbps | text / number | Generalized group label and scenario capacity input |
+| log_date | ISO date | One of five deliberately chosen simulation dates |
+| data_usage_gb | nonnegative number | Excel-generated daily volume; decimal GB assumption |
+| avg_speed_mbps | nonnegative number | Excel-generated speed |
+| downtime_minutes | nonnegative number | Excel-generated daily downtime |
+| latency_ms | nonnegative number | Excel-generated latency |
 | speed_score / downtime_score / latency_score | integer 25-100 | Threshold component scores; exact cutoffs in methodology |
 | experience_score | number 25-100 | 0.5 speed + 0.3 downtime + 0.2 latency scores |
 | current_7d_avg | nullable number | Seven complete calendar days including log_date |

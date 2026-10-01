@@ -23,6 +23,8 @@ class PublicAuditTests(unittest.TestCase):
         self.assertEqual(current["full_risk_score_rows"], 0)
         self.assertEqual(current["assigned_logged_mismatched_accounts"], 1135)
         self.assertEqual(current["missing_logged_olt_ids"], [11, 12])
+        self.assertEqual(current["usage_classification"], "synthetic, confirmed by project author")
+        self.assertIn("simulation", current["scope"])
 
     def test_missing_risk_is_not_reported_as_zero_high_risk(self):
         metrics = pd.read_csv(ROOT / "data/clean/customer_daily_metrics.csv")

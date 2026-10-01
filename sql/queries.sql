@@ -38,15 +38,16 @@ FROM olt_daily_metrics GROUP BY olt_id;
 SELECT COUNT(DISTINCT customer_id) AS leakage_accounts
 FROM customer_daily_metrics WHERE complaint_leakage_flag=1;
 
--- Source-system assignment conflicts by assigned OLT. This is a data-quality
--- queue, not evidence that an assigned OLT caused a customer's experience.
+-- Compatibility of source-derived customer groups with simulated OLT IDs.
+-- Disagreement is not observed provisioning drift or a causal experience driver.
 SELECT c.olt_id AS assigned_olt,
        COUNT(DISTINCT c.customer_id) AS service_accounts,
        COUNT(DISTINCT CASE WHEN c.olt_id <> u.olt_id THEN c.customer_id END) AS mismatched_accounts
 FROM customers_clean c JOIN usage_logs_clean u USING(customer_id)
 GROUP BY c.olt_id ORDER BY c.olt_id;
 
--- Coverage gap: absent logged OLTs are unknown, not healthy or zero utilization.
+-- Simulation scope: IDs 11/12 are outside the chosen ten-ID usage sample.
+-- Absence is not observed zero utilization or missing operational telemetry.
 SELECT o.olt_id AS missing_logged_olt
 FROM olt_info_clean o LEFT JOIN usage_logs_clean u ON o.olt_id=u.olt_id
 WHERE u.olt_id IS NULL ORDER BY o.olt_id;

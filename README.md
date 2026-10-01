@@ -1,53 +1,51 @@
-# Network Service Experience & Data Quality
+# Simulated Network Service Experience & Data Readiness
 
-Audit service experience, OLT mapping and coverage before making network or customer-risk decisions. The repository name and some `churn_*` fields are legacy compatibility names; the published sample does not support churn prediction.
-
-![Public-data analytical overview](images/01-network-overview.png)
-
-*Reproducible Python figure; Power BI refresh remains pending.*
+Demonstrate service-metric calculations, dimensional joins and data-readiness checks using Excel-generated usage scenarios. The repository name and `churn_*` fields are legacy compatibility names; no measured customer-retention outcome is available.
 
 ## Executive summary
 
-The public sample contains **1,280 service-account keys**, **6,400 daily observations**, and **five dates (1-5 August 2026)**. Rebuilt daily-average utilization is **9.83% across 10 of 12 OLTs**. Full customer-risk scoring is **unavailable** because comparing separate seven-day usage windows requires fourteen days. This is a data-readiness and service-experience case study; no peak congestion, observed churn or retention improvement is established.
+The project author confirms that usage, speed, downtime and latency were **generated with random Excel values** because operational logs were unavailable. Customer IDs were filled down as a row sequence; **ten OLT IDs** and **five dates (1-5 August 2026)** were chosen for the simulation. The frozen sample has **1,280 service-account keys** and **6,400 synthetic account-days**. Its calculated daily-average utilization is **9.83% across ten simulated OLT IDs**, using supplied capacity assumptions. This describes the scenario, not measured network conditions.
+
+Full heuristic risk scoring remains **unavailable** because its rule requires two complete, non-overlapping seven-day windows. Five simulated days do not satisfy that rule. Customer source records come from an author-described confidential government-platform export; raw identifiers and portal/billing documents remain private. See the [simulation contract](docs/simulation_contract.md).
 
 ## Business questions
 
-- What service-experience patterns need investigation?
-- Which OLTs have daily usage coverage, and what does that coverage miss?
-- Can complaint events be joined without using future information?
-- Is there enough history to score changes in customer behavior?
+- How can account-day and OLT-day metrics be reproduced and reconciled?
+- Are source-derived customer assignments compatible with simulated OLT assignments?
+- Can synthetic complaint events be joined without using future information?
+- Does the chosen scenario have enough history for the defined usage-change rule?
 
 ## Findings and actions
 
 | Finding | Evidence | Decision |
 |---|---|---|
-| Insufficient behavioral history | 0 of 6,400 rows have two complete seven-day windows | Collect at least fourteen consecutive days before full scoring |
-| OLT assignments conflict | 1,135 accounts have logged/assigned OLT disagreement | Reconcile the source mapping before targeting interventions |
-| Coverage is incomplete | 10/12 OLTs have observations | Obtain data for missing OLTs; do not treat absent data as healthy |
-| Daily average is modest | 9.83% mean utilization; no peak measurements | Collect interval throughput before capacity decisions |
-| Complaint leakage is unproven | 0 rule matches; complaints are synthetic | Demonstrate the rule without claiming support completeness |
+| Scenario too short for the rule | 0 of 6,400 rows have two complete seven-day windows | Keep full scores blank; use explicitly labeled longer scenarios only for a separate simulation demonstration |
+| Source/simulation assignments differ | 1,135 accounts have assigned/simulated OLT disagreement | Treat this as join compatibility, not an observed provisioning or migration problem |
+| Simulation scope differs from customer groups | Ten simulated OLT IDs versus 12 source-address groups | Report both scopes; IDs 11/12 were outside the selected usage simulation |
+| Daily-average calculation reconciles | 9.83% scenario mean, with no interval telemetry | Demonstrate units and arithmetic; avoid real capacity-upgrade conclusions |
+| Synthetic complaint rule runs | 0 leakage-rule matches | Describe a rule demonstration, not actual support coverage |
 
-The independent [data-readiness receipt](docs/data_readiness_receipt.json) quantifies the mapping conflict as **1,135/1,280 accounts (88.67%)**, identifies OLT **11 and 12** as absent from logged usage despite assigned accounts, and confirms that the maximum observed **daily-average** ratio is 17.98%. The source meaning of the mismatch is unknown; do not reassign accounts based on this comparison alone. See the [quality review and action order](docs/data_readiness_review.md).
+The independent [data-readiness receipt](docs/data_readiness_receipt.json) quantifies the cross-source compatibility mismatch as **1,135/1,280 accounts (88.67%)** and the maximum synthetic OLT-day daily-average ratio as **17.98%**. Customer group IDs **11 and 12** lie outside the ten-ID usage simulation. These are scenario/merge findings, not real equipment failures or missing monitoring. See the [quality review](docs/data_readiness_review.md).
 
 ## Data and privacy
 
-Public tables use pseudonymous account IDs and omit direct contact identifiers. See [data authenticity](docs/data_authenticity.md): complaint events are generated; provenance of supplied usage/performance measurements is unresolved. Do not characterize the entire sample as verified real operations. Pseudonymization is not a guarantee against linkage.
+Public customer tables use generated row labels and omit direct contact identifiers. Usage measurements and complaints are synthetic; plans and capacities are supplied scenario metadata. See [data authenticity](docs/data_authenticity.md). Sequential IDs are not stable identities across reordered extracts. Pseudonymization does not guarantee protection against external linkage.
 
-The author supplied the original customer workbook privately on 1 October 2026 and defined Activation Date as internet-service activation. Its 1,280 Combo-service rows corroborate the public customer ordering, but **1,275 activation dates differ**; the original has **zero** dates after the configured OLT cutoff. A source-order comparison also finds **71 account-days across 15 keys** logged before original activation, requiring timing/definition review. See the [source review](docs/source_workbook_review.md) and [aggregate receipt](docs/source_workbook_receipt.json). The workbook contains customer records, not the missing longitudinal usage source. Public data and Power BI inputs remain unchanged pending reviewed correction.
+The author supplied the original customer workbook privately on 1 October 2026 and defined Activation Date as internet-service activation. Its 1,280 Combo-service rows corroborate the public customer ordering, but **1,275 public activation dates differ**. The original has **zero** dates after the configured OLT cutoff. A source-order comparison finds **71 simulated account-days across 15 keys** dated before original activation; arbitrary scenario dates cannot establish actual pre-activation traffic. See the [source review](docs/source_workbook_review.md) and [aggregate receipt](docs/source_workbook_receipt.json). Public data and Power BI inputs await reviewed correction.
 
 ## Method and KPIs
 
 | KPI | Definition | Limit |
 |---|---|---|
-| Experience score | 0.5 speed score + 0.3 downtime score + 0.2 latency score | Analyst-defined thresholds |
-| Daily utilization | GB * 8 / 86400 / capacity Gbps | Average, not peak congestion |
+| Experience score | 0.5 speed score + 0.3 downtime score + 0.2 latency score | Analyst thresholds applied to synthetic measurements |
+| Daily utilization | GB * 8 / 86400 / capacity Gbps | Scenario estimate using supplied capacities; daily average only |
 | Usage drop | (prior 7-day mean - current 7-day mean) / prior mean | Two complete, disjoint windows required |
 | Complaint leakage | Experience <50 and zero as-of 30-day complaints | Simulated complaints |
 | Customer risk score | Weighted five-signal rule | Blank with insufficient history; not churn prediction |
 
 See [methodology](docs/methodology.md), [dictionary](docs/data_dictionary.md) and [model](dashboard/Data_Model.md). Customer/date and OLT/date facts join their dimensions one-to-many. Duplicate keys and invalid capacities fail the rebuild.
 
-The five-day public sample is suitable for validating the pipeline and prioritizing source repairs. It is not suitable for publishing a high-risk customer count or claiming that a specific OLT caused poor service. If no longer, verified source data is obtained, keep the project focused on data quality and observed service experience.
+The five-day simulation supports pipeline and metric verification. It cannot validate churn prediction, customer behavior or real network performance. Longer synthetic scenarios, if added separately, could demonstrate rule execution but would still not provide observed churn outcomes.
 
 ## Reproduce from public data
 
@@ -62,7 +60,7 @@ python scripts/audit_public.py
 
 The rebuild updates clean and Power BI CSVs together, plus samples and [verified metrics](docs/validated_metrics.json). No private source is needed. `01_clean_data.py` is optional private-source preparation; never commit those inputs. `02_generate_complaints.py` is the documented synthetic generator.
 
-For a read-only clean-clone verification path that does not rewrite the Power BI input copies, use [REPRODUCE_PUBLIC.md](docs/REPRODUCE_PUBLIC.md). `audit_public.py` checks raw/derived grains, capacity-ratio arithmetic, OLT coverage and assignment conflicts with an independent SQLite reconciliation.
+For a read-only clean-clone verification path that does not rewrite the Power BI input copies, use [REPRODUCE_PUBLIC.md](docs/REPRODUCE_PUBLIC.md). `audit_public.py` checks raw/derived grains, capacity-ratio arithmetic, OLT coverage and assignment conflicts with an independent SQLite reconciliation. The author used **MySQL** in the original project; SQLite is the additional review-check engine, not the author's SQL platform. Native MySQL execution remains unverified in this review; see [SQL engine notes](docs/sql_engine_notes.md).
 
 ## Power BI report
 
@@ -76,4 +74,4 @@ The old PBIX and screenshots were quarantined outside the repository because the
 
 `data/clean/` holds public inputs and derived outputs; `scripts/` builds metrics; `tests/` covers edge cases; `sql/` contains executable SQLite analysis; `notebooks/` provides public EDA; `docs/` explains evidence and limits; `dashboard/` holds the editable Power BI model.
 
-Skills: Python, pandas, SQL window functions, DAX, dimensional modeling, data-quality validation and business communication. No measured retention improvement, predictive accuracy or causal effect is claimed.
+Skills: Python, pandas, MySQL (author-reported project engine), SQL window functions, DAX, dimensional modeling, data-quality validation and business communication. No measured retention improvement, predictive accuracy or causal effect is claimed.

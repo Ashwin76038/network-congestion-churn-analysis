@@ -76,11 +76,12 @@ def reconcile(source_path: Path, root: Path = ROOT, as_of: str = "2026-09-12") -
             "account_days_before_source_activation": int(before.sum()),
             "accounts_with_logs_before_source_activation": int(paired.loc[before, "customer_id"].nunique()),
             "source_activations_after_usage_end": int(dates.gt(logged.max()).sum()),
-            "limit": "corroborated source-order mapping; investigate source timing and plan/service semantics before excluding observations",
+            "usage_classification": "synthetic Excel random values, confirmed by project author",
+            "limit": "synthetic dates compared with original activation by corroborated source order; no evidence of real pre-activation traffic",
         }
     return {
         "project": project,
-        "source": "private original workbook supplied by project author; collection independently unverified",
+        "source": "private original workbook supplied by project author, who identifies a confidential government-platform export",
         "activation_definition": "project author confirms date internet plan/service was activated",
         "workbook_service_rows": int(len(raw)),
         "source_scope": SCOPE,
@@ -94,7 +95,7 @@ def reconcile(source_path: Path, root: Path = ROOT, as_of: str = "2026-09-12") -
         "selected_activation_min": dates.min().strftime("%Y-%m-%d"),
         "selected_activation_max": dates.max().strftime("%Y-%m-%d"),
         "comparison_as_of": cutoff.strftime("%Y-%m-%d"),
-        "comparison_as_of_provenance": "current OLT model configuration; actual source snapshot date unconfirmed",
+        "comparison_as_of_provenance": "current analyst-configured reference date; actual source snapshot date undisclosed",
         "source_future_activation_rows": int(dates.gt(cutoff).sum()),
         "public_service_rows": int(len(public)),
         "public_activation_min": public_dates.min().strftime("%Y-%m-%d"),
@@ -105,7 +106,8 @@ def reconcile(source_path: Path, root: Path = ROOT, as_of: str = "2026-09-12") -
         "positional_activation_matches": matches,
         "positional_activation_mismatches": int(len(source) - matches) if matches is not None else None,
         "network_usage_temporal_checks": temporal_checks,
-        "comparison_limit": "source-order comparison, not a verified stable service-ID join; A/D/E business definitions still require confirmation",
+        "comparison_limit": "source-order comparison, not a verified stable service-ID join; A/D/E mapping is an analytical assumption because portal definitions are undisclosed",
+        "olt_group_limit": "source-address groups, not verified physical inventory; ten separate usage IDs chosen for Network simulation",
         "public_data_changed": False,
         "power_bi_execution": "not executed",
     }

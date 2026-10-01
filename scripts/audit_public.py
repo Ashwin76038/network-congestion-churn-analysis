@@ -74,7 +74,10 @@ def audit(data_dir: Path = DATA) -> dict:
     ).reindex(by_assigned.index, fill_value=0)
     by_assigned = by_assigned.reset_index()
     receipt = {
-        "scope": "committed public sample; usage provenance unresolved; complaints synthetic",
+        "scope": "committed Excel-generated usage simulation; private customer-source metadata; complaints synthetic",
+        "usage_classification": "synthetic, confirmed by project author",
+        "account_id_strategy": "generated sequential row labels; frozen sample/order only",
+        "olt_scope_interpretation": "ten simulated usage IDs versus twelve source-address groups; not verified physical inventory",
         "service_accounts": int(len(customers)),
         "account_days": int(len(usage)),
         "date_start": dates.min().strftime("%Y-%m-%d"),
@@ -101,7 +104,7 @@ def audit(data_dir: Path = DATA) -> dict:
         "mean_experience_score": float(metrics.experience_score.mean()),
         "synthetic_complaint_events": int(len(complaints)),
         "complaint_leakage_account_keys": int(metrics.loc[metrics.complaint_leakage_flag.eq(1), "customer_id"].nunique()),
-        "peak_throughput": "not observed",
+        "peak_throughput": "not observed; input usage is synthetic",
         "historical_churn_outcome": "not available",
         "power_bi_execution": "not verified by this Python/SQLite audit",
     }
