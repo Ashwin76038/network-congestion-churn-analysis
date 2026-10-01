@@ -33,6 +33,8 @@ The independent [data-readiness receipt](docs/data_readiness_receipt.json) quant
 
 Public tables use pseudonymous account IDs and omit direct contact identifiers. See [data authenticity](docs/data_authenticity.md): complaint events are generated; provenance of supplied usage/performance measurements is unresolved. Do not characterize the entire sample as verified real operations. Pseudonymization is not a guarantee against linkage.
 
+The author supplied the original customer workbook privately on 1 October 2026 and defined Activation Date as internet-service activation. Its 1,280 Combo-service rows corroborate the public customer ordering, but **1,275 activation dates differ**; the original has **zero** dates after the configured OLT cutoff. A source-order comparison also finds **71 account-days across 15 keys** logged before original activation, requiring timing/definition review. See the [source review](docs/source_workbook_review.md) and [aggregate receipt](docs/source_workbook_receipt.json). The workbook contains customer records, not the missing longitudinal usage source. Public data and Power BI inputs remain unchanged pending reviewed correction.
+
 ## Method and KPIs
 
 | KPI | Definition | Limit |

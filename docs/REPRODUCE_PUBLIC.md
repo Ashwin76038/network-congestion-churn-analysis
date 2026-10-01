@@ -2,6 +2,8 @@
 
 Use Python 3.10+ from the repository root. These checks use the published pseudonymous sample; the private source workbook is not required.
 
+The author supplied the original customer workbook privately on 1 October 2026. Its date reconciliation is documented in [source_workbook_review.md](source_workbook_review.md). To repeat that additional private check, use `python scripts/reconcile_source_workbook.py --source /private/path/original.xlsx`; the original workbook is intentionally absent from Git. This is separate from the public checks below.
+
 The dataset is **already in the project**: `data/clean/` contains 1,280 service-account rows, 6,400 usage rows, 6,400 derived account-day rows, 50 OLT-day rows, 12 OLT definitions, four plans and 805 generated complaint events. `data/sample/` contains smaller 100-account and 500-account-day extracts for inspection; it does not extend the five-day history. The seven CSVs under `dashboard/OLT_Professional_Project/data/` are Power BI input copies of the clean tables. Use `data/clean/` for the read-only audit so the Power BI project stays untouched until approval.
 
 ```bash

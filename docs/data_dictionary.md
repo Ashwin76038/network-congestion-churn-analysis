@@ -7,7 +7,7 @@ Public keys are pseudonymous service-account labels, not independently verified 
 | customer_id | text; Customer_00001 | Pseudonymous supplied service row; primary key in customers_clean |
 | plan_id | integer | FK to four supplied plan tiers |
 | olt_id | integer | Assigned OLT in customers; logged OLT in usage/network tables; meanings differ |
-| activation_date | date | Supplied date, not validated evidence of a cohort |
+| activation_date | date | Intended meaning: internet plan/service activation, confirmed by author; 1,275 public values differ from original workbook and require reconciliation before cohort claims |
 | status | category | Supplied service state, not observed churn |
 | customer_type | category | Supplied customer grouping |
 | connection_count_per_customer | integer | Source attribute; do not sum across service rows |

@@ -2,6 +2,8 @@
 
 The strongest defensible result is a **data-readiness decision**, not a churn score or a finding that peak congestion is low. Reproduce the numbers with `python scripts/audit_public.py --output docs/data_readiness_receipt.json`. That script reads only committed public CSVs, recomputes the OLT daily-average ratios from usage and capacity, and cross-checks OLT mapping/coverage with SQLite. `python scripts/validate_sql.py` runs eight business and quality queries.
 
+**Additional original-source evidence, 1 October 2026:** the author-supplied customer workbook corroborates the 1,280 Combo-service scope but reveals 1,275 public activation dates that differ from source and 71 account-days across 15 keys preceding original activation under source-order mapping. Activation meaning is now author-confirmed; source timing, transformation cause and usage authenticity remain unresolved. See [source review](source_workbook_review.md). Current public metrics and PBIP have not been corrected by this comparison.
+
 | Finding | Public evidence | Decision risk | Severity / confidence | Next action |
 |---|---:|---|---|---|
 | Behavioral history too short | 1,280 service-account keys x 5 dates = 6,400 account-days; 0 complete 14-day windows; 0 full scores | A high-risk count of zero would falsely imply risk was assessed | High / high | Obtain at least 14 consecutive, sourced days; preferably longer for holdout validation. Until then, show “Insufficient history” |
