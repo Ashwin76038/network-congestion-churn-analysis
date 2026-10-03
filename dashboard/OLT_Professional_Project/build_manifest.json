@@ -1,5 +1,31 @@
 {
-  "status": "superseded",
-  "current_evidence": "docs/validated_metrics.json",
-  "power_bi_refresh": "pending"
+  "source_kind": "synthetic Excel usage; sanitized customer attributes",
+  "native_validation": "Desktop refreshed and saved 2026-10-02; 133/133 DAX checks; see docs/powerbi_validation.md",
+  "measures": [
+    "Service Accounts",
+    "Account Days",
+    "Scenario Days",
+    "Experience Score",
+    "Daily Average Ratio",
+    "Simulated OLTs",
+    "Source OLT Groups",
+    "Scored Accounts",
+    "High Risk Accounts",
+    "High Risk Share",
+    "Risk Score",
+    "Complete Window Rows",
+    "Mismatch Accounts",
+    "Mismatch Share",
+    "Total Usage GB",
+    "Average Downtime Minutes",
+    "Average Latency Ms",
+    "Leakage Accounts",
+    "Synthetic Complaint Events"
+  ],
+  "pages": [
+    "Simulation overview",
+    "Experience investigation",
+    "Data readiness"
+  ],
+  "data_root_parameter": "set DataRoot to this checkout data folder before refresh"
 }

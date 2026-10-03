@@ -1,16 +1,16 @@
 table olt_daily_metrics
-	lineageTag: 63f33476-8ec4-4f19-a8d1-4a22e666e828
+	lineageTag: 92a2231d-94f4-4c5a-a689-711a509d7cfe
 
 	column olt_id
-		dataType: string
-		lineageTag: 0e6520f0-1617-42d8-81ab-a0868404d532
+		dataType: int64
+		lineageTag: 7fa162b4-4dd8-40ad-8ff5-cc7c5a331794
 		summarizeBy: none
 		sourceColumn: olt_id
 
 	column log_date
 		dataType: dateTime
 		formatString: dd MMM yyyy
-		lineageTag: fe202c7b-73c4-4cc8-8a8d-94015428d13e
+		lineageTag: 00651ca1-215b-4094-ba2b-85653ad8f206
 		summarizeBy: none
 		sourceColumn: log_date
 
@@ -18,31 +18,37 @@ table olt_daily_metrics
 
 	column total_usage_gb
 		dataType: int64
-		lineageTag: eba85989-668a-40a6-9274-ead08d2f3429
+		lineageTag: 0662d828-87d3-4c64-bf86-d3b56290978c
 		summarizeBy: none
 		sourceColumn: total_usage_gb
 
 	column capacity_gbps
 		dataType: int64
-		lineageTag: 370c7819-530b-4f8b-b88b-cc656dc816e8
+		lineageTag: 49e302d0-b95f-42f9-b635-e16a6b2bb57a
 		summarizeBy: none
 		sourceColumn: capacity_gbps
 
 	column avg_gbps
 		dataType: double
-		lineageTag: 6e16173b-ec0b-4560-9725-d8b7985291db
+		lineageTag: d61a1a1a-f0ab-4c5a-a585-5b07707aa816
 		summarizeBy: none
 		sourceColumn: avg_gbps
 
+	column congestion_ratio
+		dataType: double
+		lineageTag: 8f888dc4-e79e-460b-bd4c-996344621bd1
+		summarizeBy: none
+		sourceColumn: congestion_ratio
+
 	column congestion_ratio_percent
 		dataType: double
-		lineageTag: 3a75c3fe-ed47-455a-b1da-4242906ecf0e
+		lineageTag: 9b3abe29-7e41-44cc-88ab-b32465c1093a
 		summarizeBy: none
 		sourceColumn: congestion_ratio_percent
 
 	column congestion_status
 		dataType: string
-		lineageTag: 3f7bc4e2-23b2-43a4-9723-503a51d0fc64
+		lineageTag: 0f763aa5-174f-4ae5-93f4-92d31fa01207
 		summarizeBy: none
 		sourceColumn: congestion_status
 
@@ -52,6 +58,7 @@ table olt_daily_metrics
 				let
 				 Source = Csv.Document(File.Contents(DataRoot & "olt_daily_metrics.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				 Typed = Table.TransformColumnTypes(Headers,{{"olt_id", type text},{"log_date", type date},{"total_usage_gb", Int64.Type},{"capacity_gbps", Int64.Type},{"avg_gbps", type number},{"congestion_ratio_percent", type number},{"congestion_status", type text}},"en-US")
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"olt_id", Int64.Type},{"log_date", type date},{"total_usage_gb", Int64.Type},{"capacity_gbps", Int64.Type},{"avg_gbps", type number},{"congestion_ratio", type number},{"congestion_ratio_percent", type number},{"congestion_status", type text}},"en-US")
 				in Typed
 

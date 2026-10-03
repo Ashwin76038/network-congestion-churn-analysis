@@ -1,0 +1,667 @@
+[
+  {
+    "check": "All / Service Accounts",
+    "expression": "[Service Accounts]",
+    "expected": 1280
+  },
+  {
+    "check": "All / Account Days",
+    "expression": "[Account Days]",
+    "expected": 6400
+  },
+  {
+    "check": "All / Scenario Days",
+    "expression": "[Scenario Days]",
+    "expected": 5
+  },
+  {
+    "check": "All / Experience Score",
+    "expression": "[Experience Score]",
+    "expected": 89.0703125
+  },
+  {
+    "check": "All / Daily Average Ratio",
+    "expression": "[Daily Average Ratio]",
+    "expected": 0.09833129629629626
+  },
+  {
+    "check": "All / Simulated OLTs",
+    "expression": "[Simulated OLTs]",
+    "expected": 10
+  },
+  {
+    "check": "All / Source OLT Groups",
+    "expression": "[Source OLT Groups]",
+    "expected": 12
+  },
+  {
+    "check": "All / Scored Accounts",
+    "expression": "[Scored Accounts]",
+    "expected": 0
+  },
+  {
+    "check": "All / High Risk Accounts",
+    "expression": "[High Risk Accounts]",
+    "expected": null
+  },
+  {
+    "check": "All / High Risk Share",
+    "expression": "[High Risk Share]",
+    "expected": null
+  },
+  {
+    "check": "All / Risk Score",
+    "expression": "[Risk Score]",
+    "expected": null
+  },
+  {
+    "check": "All / Complete Window Rows",
+    "expression": "[Complete Window Rows]",
+    "expected": 0
+  },
+  {
+    "check": "All / Mismatch Accounts",
+    "expression": "[Mismatch Accounts]",
+    "expected": 1135
+  },
+  {
+    "check": "All / Mismatch Share",
+    "expression": "[Mismatch Share]",
+    "expected": 0.88671875
+  },
+  {
+    "check": "All / Total Usage GB",
+    "expression": "[Total Usage GB]",
+    "expected": 88686.0
+  },
+  {
+    "check": "All / Average Downtime Minutes",
+    "expression": "[Average Downtime Minutes]",
+    "expected": 14.99125
+  },
+  {
+    "check": "All / Average Latency Ms",
+    "expression": "[Average Latency Ms]",
+    "expected": 30.0309375
+  },
+  {
+    "check": "All / Leakage Accounts",
+    "expression": "[Leakage Accounts]",
+    "expected": 0
+  },
+  {
+    "check": "All / Synthetic Complaint Events",
+    "expression": "[Synthetic Complaint Events]",
+    "expected": 805
+  },
+  {
+    "check": "Assigned 1 / Service Accounts",
+    "expression": "CALCULATE([Service Accounts],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 449
+  },
+  {
+    "check": "Assigned 1 / Account Days",
+    "expression": "CALCULATE([Account Days],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 2245
+  },
+  {
+    "check": "Assigned 1 / Scenario Days",
+    "expression": "CALCULATE([Scenario Days],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 5
+  },
+  {
+    "check": "Assigned 1 / Experience Score",
+    "expression": "CALCULATE([Experience Score],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 88.38975501113586
+  },
+  {
+    "check": "Assigned 1 / Daily Average Ratio",
+    "expression": "CALCULATE([Daily Average Ratio],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 0.09833129629629626
+  },
+  {
+    "check": "Assigned 1 / Simulated OLTs",
+    "expression": "CALCULATE([Simulated OLTs],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 10
+  },
+  {
+    "check": "Assigned 1 / Source OLT Groups",
+    "expression": "CALCULATE([Source OLT Groups],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 1
+  },
+  {
+    "check": "Assigned 1 / Scored Accounts",
+    "expression": "CALCULATE([Scored Accounts],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Assigned 1 / High Risk Accounts",
+    "expression": "CALCULATE([High Risk Accounts],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Assigned 1 / High Risk Share",
+    "expression": "CALCULATE([High Risk Share],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Assigned 1 / Risk Score",
+    "expression": "CALCULATE([Risk Score],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Assigned 1 / Complete Window Rows",
+    "expression": "CALCULATE([Complete Window Rows],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Assigned 1 / Mismatch Accounts",
+    "expression": "CALCULATE([Mismatch Accounts],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 400
+  },
+  {
+    "check": "Assigned 1 / Mismatch Share",
+    "expression": "CALCULATE([Mismatch Share],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 0.89086859688196
+  },
+  {
+    "check": "Assigned 1 / Total Usage GB",
+    "expression": "CALCULATE([Total Usage GB],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 30196.0
+  },
+  {
+    "check": "Assigned 1 / Average Downtime Minutes",
+    "expression": "CALCULATE([Average Downtime Minutes],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 15.057015590200445
+  },
+  {
+    "check": "Assigned 1 / Average Latency Ms",
+    "expression": "CALCULATE([Average Latency Ms],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 29.762583518930956
+  },
+  {
+    "check": "Assigned 1 / Leakage Accounts",
+    "expression": "CALCULATE([Leakage Accounts],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Assigned 1 / Synthetic Complaint Events",
+    "expression": "CALCULATE([Synthetic Complaint Events],TREATAS({1},olt_info_clean[olt_id]))",
+    "expected": 269
+  },
+  {
+    "check": "Logged 9 / Service Accounts",
+    "expression": "CALCULATE([Service Accounts],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 120
+  },
+  {
+    "check": "Logged 9 / Account Days",
+    "expression": "CALCULATE([Account Days],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 600
+  },
+  {
+    "check": "Logged 9 / Scenario Days",
+    "expression": "CALCULATE([Scenario Days],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 5
+  },
+  {
+    "check": "Logged 9 / Experience Score",
+    "expression": "CALCULATE([Experience Score],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 89.725
+  },
+  {
+    "check": "Logged 9 / Daily Average Ratio",
+    "expression": "CALCULATE([Daily Average Ratio],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 0.07903703703703698
+  },
+  {
+    "check": "Logged 9 / Simulated OLTs",
+    "expression": "CALCULATE([Simulated OLTs],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 1
+  },
+  {
+    "check": "Logged 9 / Source OLT Groups",
+    "expression": "CALCULATE([Source OLT Groups],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 12
+  },
+  {
+    "check": "Logged 9 / Scored Accounts",
+    "expression": "CALCULATE([Scored Accounts],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Logged 9 / High Risk Accounts",
+    "expression": "CALCULATE([High Risk Accounts],TREATAS({9},logged_olt[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Logged 9 / High Risk Share",
+    "expression": "CALCULATE([High Risk Share],TREATAS({9},logged_olt[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Logged 9 / Risk Score",
+    "expression": "CALCULATE([Risk Score],TREATAS({9},logged_olt[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Logged 9 / Complete Window Rows",
+    "expression": "CALCULATE([Complete Window Rows],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Logged 9 / Mismatch Accounts",
+    "expression": "CALCULATE([Mismatch Accounts],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 112
+  },
+  {
+    "check": "Logged 9 / Mismatch Share",
+    "expression": "CALCULATE([Mismatch Share],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 0.9333333333333333
+  },
+  {
+    "check": "Logged 9 / Total Usage GB",
+    "expression": "CALCULATE([Total Usage GB],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 8536.0
+  },
+  {
+    "check": "Logged 9 / Average Downtime Minutes",
+    "expression": "CALCULATE([Average Downtime Minutes],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 14.73
+  },
+  {
+    "check": "Logged 9 / Average Latency Ms",
+    "expression": "CALCULATE([Average Latency Ms],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 29.663333333333334
+  },
+  {
+    "check": "Logged 9 / Leakage Accounts",
+    "expression": "CALCULATE([Leakage Accounts],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Logged 9 / Synthetic Complaint Events",
+    "expression": "CALCULATE([Synthetic Complaint Events],TREATAS({9},logged_olt[olt_id]))",
+    "expected": 805
+  },
+  {
+    "check": "Basic / Service Accounts",
+    "expression": "CALCULATE([Service Accounts],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 91
+  },
+  {
+    "check": "Basic / Account Days",
+    "expression": "CALCULATE([Account Days],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 455
+  },
+  {
+    "check": "Basic / Scenario Days",
+    "expression": "CALCULATE([Scenario Days],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 5
+  },
+  {
+    "check": "Basic / Experience Score",
+    "expression": "CALCULATE([Experience Score],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 74.45604395604396
+  },
+  {
+    "check": "Basic / Daily Average Ratio",
+    "expression": "CALCULATE([Daily Average Ratio],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 0.09833129629629626
+  },
+  {
+    "check": "Basic / Simulated OLTs",
+    "expression": "CALCULATE([Simulated OLTs],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 10
+  },
+  {
+    "check": "Basic / Source OLT Groups",
+    "expression": "CALCULATE([Source OLT Groups],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 12
+  },
+  {
+    "check": "Basic / Scored Accounts",
+    "expression": "CALCULATE([Scored Accounts],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 0
+  },
+  {
+    "check": "Basic / High Risk Accounts",
+    "expression": "CALCULATE([High Risk Accounts],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": null
+  },
+  {
+    "check": "Basic / High Risk Share",
+    "expression": "CALCULATE([High Risk Share],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": null
+  },
+  {
+    "check": "Basic / Risk Score",
+    "expression": "CALCULATE([Risk Score],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": null
+  },
+  {
+    "check": "Basic / Complete Window Rows",
+    "expression": "CALCULATE([Complete Window Rows],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 0
+  },
+  {
+    "check": "Basic / Mismatch Accounts",
+    "expression": "CALCULATE([Mismatch Accounts],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 81
+  },
+  {
+    "check": "Basic / Mismatch Share",
+    "expression": "CALCULATE([Mismatch Share],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 0.8901098901098901
+  },
+  {
+    "check": "Basic / Total Usage GB",
+    "expression": "CALCULATE([Total Usage GB],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 1347.0
+  },
+  {
+    "check": "Basic / Average Downtime Minutes",
+    "expression": "CALCULATE([Average Downtime Minutes],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 14.694505494505494
+  },
+  {
+    "check": "Basic / Average Latency Ms",
+    "expression": "CALCULATE([Average Latency Ms],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 29.448351648351647
+  },
+  {
+    "check": "Basic / Leakage Accounts",
+    "expression": "CALCULATE([Leakage Accounts],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 0
+  },
+  {
+    "check": "Basic / Synthetic Complaint Events",
+    "expression": "CALCULATE([Synthetic Complaint Events],TREATAS({\"Basic\"},customers_clean[plan_tier]))",
+    "expected": 63
+  },
+  {
+    "check": "First day / Service Accounts",
+    "expression": "CALCULATE([Service Accounts],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 1280
+  },
+  {
+    "check": "First day / Account Days",
+    "expression": "CALCULATE([Account Days],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 1280
+  },
+  {
+    "check": "First day / Scenario Days",
+    "expression": "CALCULATE([Scenario Days],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 1
+  },
+  {
+    "check": "First day / Experience Score",
+    "expression": "CALCULATE([Experience Score],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 88.810546875
+  },
+  {
+    "check": "First day / Daily Average Ratio",
+    "expression": "CALCULATE([Daily Average Ratio],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 0.09868796296296294
+  },
+  {
+    "check": "First day / Simulated OLTs",
+    "expression": "CALCULATE([Simulated OLTs],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 10
+  },
+  {
+    "check": "First day / Source OLT Groups",
+    "expression": "CALCULATE([Source OLT Groups],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 12
+  },
+  {
+    "check": "First day / Scored Accounts",
+    "expression": "CALCULATE([Scored Accounts],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 0
+  },
+  {
+    "check": "First day / High Risk Accounts",
+    "expression": "CALCULATE([High Risk Accounts],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": null
+  },
+  {
+    "check": "First day / High Risk Share",
+    "expression": "CALCULATE([High Risk Share],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": null
+  },
+  {
+    "check": "First day / Risk Score",
+    "expression": "CALCULATE([Risk Score],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": null
+  },
+  {
+    "check": "First day / Complete Window Rows",
+    "expression": "CALCULATE([Complete Window Rows],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 0
+  },
+  {
+    "check": "First day / Mismatch Accounts",
+    "expression": "CALCULATE([Mismatch Accounts],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 1135
+  },
+  {
+    "check": "First day / Mismatch Share",
+    "expression": "CALCULATE([Mismatch Share],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 0.88671875
+  },
+  {
+    "check": "First day / Total Usage GB",
+    "expression": "CALCULATE([Total Usage GB],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 17743.0
+  },
+  {
+    "check": "First day / Average Downtime Minutes",
+    "expression": "CALCULATE([Average Downtime Minutes],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 15.325
+  },
+  {
+    "check": "First day / Average Latency Ms",
+    "expression": "CALCULATE([Average Latency Ms],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 29.96875
+  },
+  {
+    "check": "First day / Leakage Accounts",
+    "expression": "CALCULATE([Leakage Accounts],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 0
+  },
+  {
+    "check": "First day / Synthetic Complaint Events",
+    "expression": "CALCULATE([Synthetic Complaint Events],TREATAS({DATE(2026,8,1)},DateTable[Date]))",
+    "expected": 163
+  },
+  {
+    "check": "Assigned 11 / Service Accounts",
+    "expression": "CALCULATE([Service Accounts],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 7
+  },
+  {
+    "check": "Assigned 11 / Account Days",
+    "expression": "CALCULATE([Account Days],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 35
+  },
+  {
+    "check": "Assigned 11 / Scenario Days",
+    "expression": "CALCULATE([Scenario Days],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 5
+  },
+  {
+    "check": "Assigned 11 / Experience Score",
+    "expression": "CALCULATE([Experience Score],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 91.64285714285714
+  },
+  {
+    "check": "Assigned 11 / Daily Average Ratio",
+    "expression": "CALCULATE([Daily Average Ratio],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 0.09833129629629626
+  },
+  {
+    "check": "Assigned 11 / Simulated OLTs",
+    "expression": "CALCULATE([Simulated OLTs],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 10
+  },
+  {
+    "check": "Assigned 11 / Source OLT Groups",
+    "expression": "CALCULATE([Source OLT Groups],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 1
+  },
+  {
+    "check": "Assigned 11 / Scored Accounts",
+    "expression": "CALCULATE([Scored Accounts],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Assigned 11 / High Risk Accounts",
+    "expression": "CALCULATE([High Risk Accounts],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Assigned 11 / High Risk Share",
+    "expression": "CALCULATE([High Risk Share],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Assigned 11 / Risk Score",
+    "expression": "CALCULATE([Risk Score],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": null
+  },
+  {
+    "check": "Assigned 11 / Complete Window Rows",
+    "expression": "CALCULATE([Complete Window Rows],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Assigned 11 / Mismatch Accounts",
+    "expression": "CALCULATE([Mismatch Accounts],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 7
+  },
+  {
+    "check": "Assigned 11 / Mismatch Share",
+    "expression": "CALCULATE([Mismatch Share],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 1.0
+  },
+  {
+    "check": "Assigned 11 / Total Usage GB",
+    "expression": "CALCULATE([Total Usage GB],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 611.0
+  },
+  {
+    "check": "Assigned 11 / Average Downtime Minutes",
+    "expression": "CALCULATE([Average Downtime Minutes],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 16.0
+  },
+  {
+    "check": "Assigned 11 / Average Latency Ms",
+    "expression": "CALCULATE([Average Latency Ms],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 33.02857142857143
+  },
+  {
+    "check": "Assigned 11 / Leakage Accounts",
+    "expression": "CALCULATE([Leakage Accounts],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 0
+  },
+  {
+    "check": "Assigned 11 / Synthetic Complaint Events",
+    "expression": "CALCULATE([Synthetic Complaint Events],TREATAS({11},olt_info_clean[olt_id]))",
+    "expected": 7
+  },
+  {
+    "check": "Combined / Service Accounts",
+    "expression": "CALCULATE([Service Accounts],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 49
+  },
+  {
+    "check": "Combined / Account Days",
+    "expression": "CALCULATE([Account Days],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 49
+  },
+  {
+    "check": "Combined / Scenario Days",
+    "expression": "CALCULATE([Scenario Days],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 1
+  },
+  {
+    "check": "Combined / Experience Score",
+    "expression": "CALCULATE([Experience Score],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 89.43877551020408
+  },
+  {
+    "check": "Combined / Daily Average Ratio",
+    "expression": "CALCULATE([Daily Average Ratio],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 0.0789351851851851
+  },
+  {
+    "check": "Combined / Simulated OLTs",
+    "expression": "CALCULATE([Simulated OLTs],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 1
+  },
+  {
+    "check": "Combined / Source OLT Groups",
+    "expression": "CALCULATE([Source OLT Groups],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 1
+  },
+  {
+    "check": "Combined / Scored Accounts",
+    "expression": "CALCULATE([Scored Accounts],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 0
+  },
+  {
+    "check": "Combined / High Risk Accounts",
+    "expression": "CALCULATE([High Risk Accounts],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": null
+  },
+  {
+    "check": "Combined / High Risk Share",
+    "expression": "CALCULATE([High Risk Share],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": null
+  },
+  {
+    "check": "Combined / Risk Score",
+    "expression": "CALCULATE([Risk Score],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": null
+  },
+  {
+    "check": "Combined / Complete Window Rows",
+    "expression": "CALCULATE([Complete Window Rows],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 0
+  },
+  {
+    "check": "Combined / Mismatch Accounts",
+    "expression": "CALCULATE([Mismatch Accounts],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 49
+  },
+  {
+    "check": "Combined / Mismatch Share",
+    "expression": "CALCULATE([Mismatch Share],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 1.0
+  },
+  {
+    "check": "Combined / Total Usage GB",
+    "expression": "CALCULATE([Total Usage GB],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 717.0
+  },
+  {
+    "check": "Combined / Average Downtime Minutes",
+    "expression": "CALCULATE([Average Downtime Minutes],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 15.775510204081632
+  },
+  {
+    "check": "Combined / Average Latency Ms",
+    "expression": "CALCULATE([Average Latency Ms],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 27.857142857142858
+  },
+  {
+    "check": "Combined / Leakage Accounts",
+    "expression": "CALCULATE([Leakage Accounts],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 0
+  },
+  {
+    "check": "Combined / Synthetic Complaint Events",
+    "expression": "CALCULATE([Synthetic Complaint Events],TREATAS({1},olt_info_clean[olt_id]),TREATAS({9},logged_olt[olt_id]),TREATAS({DATE(2026,8,3)},DateTable[Date]))",
+    "expected": 53
+  }
+]

@@ -1,1 +1,5 @@
 expression DataRoot = "C:/REPLACE_WITH_YOUR_CHECKOUT/dashboard/OLT_Professional_Project/data/" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 4d472b2f-7ea7-4343-ace8-59f996876bea
+
+	annotation PBI_ResultType = Text
+

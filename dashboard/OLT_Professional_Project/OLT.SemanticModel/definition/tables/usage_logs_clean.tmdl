@@ -1,22 +1,22 @@
 table usage_logs_clean
-	lineageTag: 3be5d67b-31cf-4679-b75b-cbde8bd232d8
+	lineageTag: 011dc81a-ee81-4eae-958f-b1d39a448f0c
 
 	column customer_id
 		dataType: string
-		lineageTag: 1b1802bb-cf75-4a26-9bae-5a24093f76d7
+		lineageTag: 973546f5-163d-483b-a89e-f091ea679319
 		summarizeBy: none
 		sourceColumn: customer_id
 
 	column olt_id
-		dataType: string
-		lineageTag: c4b086bd-2354-4691-9dcd-ca3df8f275df
+		dataType: int64
+		lineageTag: 949e68d9-cb7d-44b3-90dd-1735b9412f1c
 		summarizeBy: none
 		sourceColumn: olt_id
 
 	column log_date
 		dataType: dateTime
 		formatString: dd MMM yyyy
-		lineageTag: 26b14ed6-a5d8-483b-ad66-bbab0ce59f4b
+		lineageTag: a99a42d3-6a2e-456d-bfeb-b8b93e56603e
 		summarizeBy: none
 		sourceColumn: log_date
 
@@ -24,37 +24,37 @@ table usage_logs_clean
 
 	column plan_tier
 		dataType: string
-		lineageTag: f5def6cf-643b-4240-aa97-a10d2523d554
+		lineageTag: ff84b12c-135e-4a03-874f-c7ed82419868
 		summarizeBy: none
 		sourceColumn: plan_tier
 
 	column value_segment
 		dataType: string
-		lineageTag: 12c004af-1221-43b4-a7cf-3007821cc1d6
+		lineageTag: adc3d077-a9c2-43f0-ab36-8b50b0ae0762
 		summarizeBy: none
 		sourceColumn: value_segment
 
 	column data_usage_gb
 		dataType: int64
-		lineageTag: ac504f13-0de7-4505-8193-239af506a631
+		lineageTag: 9ba435d5-6611-4888-8e3d-53d6d9f6937f
 		summarizeBy: none
 		sourceColumn: data_usage_gb
 
 	column avg_speed_mbps
 		dataType: int64
-		lineageTag: 0ed98b4f-d0f3-436d-91e4-03f83fa1adab
+		lineageTag: 2ea5e0d9-a393-46a3-a04c-61414785be81
 		summarizeBy: none
 		sourceColumn: avg_speed_mbps
 
 	column downtime_minutes
 		dataType: int64
-		lineageTag: 7da0dc3d-c185-4fa5-8f1f-f5760821568a
+		lineageTag: 84448063-d007-4f5a-b03d-840d0cd01bb5
 		summarizeBy: none
 		sourceColumn: downtime_minutes
 
 	column latency_ms
 		dataType: int64
-		lineageTag: b3b0e9c7-9849-4b1d-bae4-98a26bf97f89
+		lineageTag: 6f09f440-fc0f-49ef-8732-ee12ed4c86a7
 		summarizeBy: none
 		sourceColumn: latency_ms
 
@@ -64,6 +64,7 @@ table usage_logs_clean
 				let
 				 Source = Csv.Document(File.Contents(DataRoot & "usage_logs_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				 Typed = Table.TransformColumnTypes(Headers,{{"customer_id", type text},{"olt_id", type text},{"log_date", type date},{"plan_tier", type text},{"value_segment", type text},{"data_usage_gb", type number},{"avg_speed_mbps", type number},{"downtime_minutes", type number},{"latency_ms", type number}},"en-US")
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"customer_id", type text},{"olt_id", Int64.Type},{"log_date", type date},{"plan_tier", type text},{"value_segment", type text},{"data_usage_gb", Int64.Type},{"avg_speed_mbps", Int64.Type},{"downtime_minutes", Int64.Type},{"latency_ms", Int64.Type}},"en-US")
 				in Typed
 

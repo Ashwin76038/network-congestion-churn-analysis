@@ -2,197 +2,71 @@ cultureInfo en-US
 
 	linguisticMetadata =
 			{
-			  "Version": "2.0.0",
+			  "Version": "1.0.0",
 			  "Language": "en-US",
 			  "Entities": {
 			    "olt_info_clean.olt_id": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "olt_info_clean",
-			          "ConceptualProperty": "olt_id"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "olt_info_clean",
+			        "ConceptualProperty": "olt_id"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "OLT": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.avg_congestion_ratio": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Avg Congestion Ratio"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "_Measures",
+			        "ConceptualProperty": "Avg Congestion Ratio"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Average utilization": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.worst_risk_customers": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Worst Risk Customers"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "_Measures",
+			        "ConceptualProperty": "Worst Risk Customers"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Customers": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.avg_experience_score": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Avg Experience Score"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "_Measures",
+			        "ConceptualProperty": "Avg Experience Score"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Experience": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.max_risk_score": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Max Risk Score"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "_Measures",
+			        "ConceptualProperty": "Max Risk Score"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Risk score": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "customers_clean.value_segment": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "customers_clean",
-			          "ConceptualProperty": "value_segment"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "customers_clean",
+			        "ConceptualProperty": "value_segment"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Value segment": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "customers_clean.customer_id": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "customers_clean",
-			          "ConceptualProperty": "customer_id"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "customers_clean",
+			        "ConceptualProperty": "customer_id"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Customer ID": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "customers_clean.olt_id": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "customers_clean",
-			          "ConceptualProperty": "olt_id"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "customers_clean",
+			        "ConceptualProperty": "olt_id"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Assigned OLT": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "customer_daily_metrics.churn_risk_category": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "customer_daily_metrics",
-			          "ConceptualProperty": "churn_risk_category"
-			        }
+			      "Binding": {
+			        "ConceptualEntity": "customer_daily_metrics",
+			        "ConceptualProperty": "churn_risk_category"
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Risk category": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    }
 			  }
 			}

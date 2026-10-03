@@ -12,6 +12,10 @@ class MetricsTests(unittest.TestCase):
  def test_future_complaint(self):
   m=build_customer_metrics(self.usage(),self.complaints());self.assertEqual(m.complaint_count.iloc[0],0);self.assertEqual(m.complaint_count.iloc[-1],1)
  def test_missing_day(self):self.assertTrue(build_customer_metrics(self.usage().drop(index=3),self.complaints()).churn_risk_score.isna().all())
+ def test_zero_prior_usage_has_no_defined_percentage_or_full_risk(self):
+  u=self.usage();u.loc[:6,'data_usage_gb']=0
+  m=build_customer_metrics(u,self.complaints())
+  self.assertTrue(m.churn_risk_score.isna().all());self.assertTrue(m.usage_drop_percent.isna().all())
  def test_fractional_boundaries(self):
   m=add_scores(self.usage());self.assertEqual(list(m[['speed_score','downtime_score','latency_score']].iloc[0]),[75,75,75])
  def test_duplicates(self):

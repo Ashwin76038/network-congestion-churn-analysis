@@ -1,68 +1,50 @@
-# Network Congestion & Customer Risk Analysis
+# Simulated Network Service Experience & Data Readiness
 
-Connect service experience, usage and network load to an explainable operational review workflow.
+A Python, MySQL and Power BI portfolio demonstration of metric design, separate OLT roles, missing-history handling and reproducible data-quality checks.
 
-![Public-data analytical overview](images/01-network-overview.png)
+![Validated Desktop simulation overview](dashboard/screenshots/simulation-overview.png)
 
-*Reproducible Python figure; Power BI refresh remains pending.*
+## Data and scope
 
-## Executive summary
+The author confirms that usage, speed, downtime and latency were generated with random Excel values because operational logs were unavailable. Ten OLT IDs, five dates (1–5 August 2026) and sequential customer IDs were chosen. The sample has **1,280 service-account keys and 6,400 synthetic account-days**. Complaints are separately generated synthetic events (805; seed 42). Plans and capacities are scenario assumptions.
 
-The public sample contains **1,280 service accounts**, **6,400 daily observations**, and **five dates (1-5 August 2026)**. Rebuilt daily-average utilization is **9.83% across 10 of 12 OLTs**. Full customer-risk scoring is **unavailable** because comparing separate seven-day usage windows requires fourteen days.
+Customer attributes derive from a confidential government-platform extract. Contacts, raw OLT addresses and exact activation dates remain private. Sequential IDs are frozen row labels, not stable customer identities. The original Excel random formulas/seed are unavailable: the frozen CSV analysis is reproducible, original random generation is not. [Simulation contract](docs/simulation_contract.md).
 
-## Business questions
+## Three strongest findings
 
-- What service-experience patterns need investigation?
-- Which OLTs have daily usage coverage, and what does that coverage miss?
-- Can complaint events be joined without using future information?
-- Is there enough history to score changes in customer behavior?
+1. **Zero complete 14-day windows**: the rule requires two complete, disjoint seven-day windows and positive prior usage. Full risk and high-risk share remain blank, never zero. Five dates cannot validate a churn predictor.
+2. **1,135/1,280 assigned-versus-logged ID conflicts (88.67%)**: this is compatibility between source-derived groups and a separately generated simulation. It does not establish faulty provisioning or migration. The model keeps assigned and logged OLT dimensions separate.
+3. **Ten simulated OLT IDs versus 12 source-address groups**: IDs 11/12 lie outside the chosen simulation scope. The scenario's mean daily-average ratio is **9.83%**, maximum **17.98%**, against assumed capacities. No peak telemetry or actual congestion is observed.
 
-## Findings and actions
+Experience averages 89.07 under analyst-defined thresholds; no business impact, retention improvement or predictive accuracy is claimed. Source comparison also found 71 synthetic account-days before original activation across 15 keys: arbitrary scenario chronology, not real pre-activation traffic.
 
-| Finding | Evidence | Decision |
-|---|---|---|
-| Insufficient behavioral history | 0 of 6,400 rows have two complete seven-day windows | Collect at least fourteen consecutive days before full scoring |
-| OLT assignments conflict | 1,135 accounts have logged/assigned OLT disagreement | Reconcile the source mapping before targeting interventions |
-| Coverage is incomplete | 10/12 OLTs have observations | Obtain data for missing OLTs; do not treat absent data as healthy |
-| Daily average is modest | 9.83% mean utilization; no peak measurements | Collect interval throughput before capacity decisions |
-| Complaint leakage is unproven | 0 rule matches; complaints are synthetic | Demonstrate the rule without claiming support completeness |
+## Implemented and executed
 
-## Data and privacy
+- Three-page editable [Power BI project](dashboard/OLT_Professional_Project/OLT_Churn_Network_Risk_Professional.pbip): Simulation overview, Experience investigation, Data readiness.
+- Refreshed and saved in Desktop on **2 October 2026**; **133/133 native DAX checks** passed (19 measures across seven contexts). All three pages rendered; logged OLT slicer/reset matched independent totals. [Evidence and real screenshots](docs/powerbi_validation.md).
+- **12 native MySQL 8.0.46 checks** passed, including calendar-window completeness, mapping conflicts, missing scores and GB/Gbps units. [Receipt](docs/mysql_validation.json).
+- **15 Python tests** passed, covering window gaps, zero prior usage, future complaints, units, keys, source parsing, report copies and separate OLT roles.
 
-Public tables use pseudonymous account IDs and omit direct contact identifiers. See [data authenticity](docs/data_authenticity.md): complaint events are generated; provenance of supplied usage/performance measurements is unresolved. Do not characterize the entire sample as verified real operations. Pseudonymization is not a guarantee against linkage.
+The legacy repository/PBIP names and `churn_*` fields are retained for compatibility. This is a service-experience and data-readiness simulation, not observed churn prediction.
 
-## Method and KPIs
-
-| KPI | Definition | Limit |
-|---|---|---|
-| Experience score | 0.5 speed score + 0.3 downtime score + 0.2 latency score | Analyst-defined thresholds |
-| Daily utilization | GB * 8 / 86400 / capacity Gbps | Average, not peak congestion |
-| Usage drop | (prior 7-day mean - current 7-day mean) / prior mean | Two complete, disjoint windows required |
-| Complaint leakage | Experience <50 and zero as-of 30-day complaints | Simulated complaints |
-| Customer risk score | Weighted five-signal rule | Blank with insufficient history; not churn prediction |
-
-See [methodology](docs/methodology.md), [dictionary](docs/data_dictionary.md) and [model](dashboard/Data_Model.md). Customer/date and OLT/date facts join their dimensions one-to-many. Duplicate keys and invalid capacities fail the rebuild.
-
-## Reproduce from public data
+## Reproduce
 
 ```bash
 python -m pip install -r requirements.txt
 python scripts/03_build_metrics.py
 python -m unittest discover -s tests -v
-python scripts/render_overview.py
 python scripts/validate_sql.py
+python scripts/audit_public.py
+python scripts/build_dax_validation.py
+python scripts/configure_powerbi.py
 ```
 
-The rebuild updates clean and Power BI CSVs together, plus samples and [verified metrics](docs/validated_metrics.json). No private source is needed. `01_clean_data.py` is optional private-source preparation; never commit those inputs. `02_generate_complaints.py` is the documented synthetic generator.
+Open the PBIP, refresh, apply pending changes, and run `docs/validate_measures.dax` in DAX query view. Expect Checks=133, Passed=133, empty Failures. [Clean-clone guide](docs/REPRODUCE_PUBLIC.md) and [MySQL commands](docs/sql_engine_notes.md).
 
-## Power BI report
+The author used MySQL. SQLite checks are supplementary portable audits and are labeled separately. No private workbook or confidential portal is required for public reproduction. Do not commit `.pbi` caches or raw workbooks. Earlier history may retain legacy artifacts.
 
-Editable source: `dashboard/OLT_Professional_Project/OLT_Churn_Network_Risk_Professional.pbip`. Set the `DataRoot` Power Query parameter to the checkout's `dashboard/OLT_Professional_Project/data/` folder, including its final slash. Refresh and review the report in Power BI Desktop.
+## Documentation and readiness
 
-The old PBIX and screenshots were quarantined outside the repository because their risk counts predate the corrected metric definitions. A refreshed screenshot is pending; the source files are not claimed to have passed Desktop rendering tests. Legacy churn_* names and filenames are compatibility names only.
+[Portfolio review](docs/portfolio_review.md) includes changed-file groups, before/after evidence, an interview story and the scoped **4/5 simulation/BI readiness assessment**. [Methodology](docs/methodology.md), [dictionary](docs/data_dictionary.md), [model/filter contract](dashboard/Data_Model.md), [authenticity](docs/data_authenticity.md) and [source reconciliation](docs/source_workbook_review.md) define the limits.
 
-## Repository structure and skills
-
-`data/clean/` holds public inputs and derived outputs; `scripts/` builds metrics; `tests/` covers edge cases; `sql/` contains executable SQLite analysis; `notebooks/` provides public EDA; `docs/` explains evidence and limits; `dashboard/` holds the editable Power BI model.
-
-Skills: Python, pandas, SQL window functions, DAX, dimensional modeling, data-quality validation and business communication. No measured retention improvement, predictive accuracy or causal effect is claimed.
+Real churn or congestion claims would require authentic longitudinal/interval measurements, stable source identities and validated outcomes. Those are unavailable and are not required for this clearly labeled simulation deliverable.
