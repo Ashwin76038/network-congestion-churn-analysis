@@ -2,7 +2,7 @@
 
 | Source | Classification | Evidence and limitation |
 |---|---|---|
-| Customer extract | Author-described confidential government-platform export, supplied privately | 1,320 original rows; Combo-service scope gives 1,280. Activation Date means service activation per author; 1,275 public dates differ. Raw identifiers and confidential portal documentation remain private. |
+| Customer extract | Author-described confidential government-platform export, supplied privately | 1,320 original rows; Combo-service scope gives 1,280. Activation Date means service activation per author; 1,275 earlier prepared dates differed; all precise public dates are now withheld. Raw identifiers and confidential portal documentation remain private. |
 | Usage, speed, downtime, latency | Synthetic Excel random values, confirmed by author | Ten OLT IDs and five scenario dates deliberately selected. Original Excel formulas/random seed were not supplied; frozen CSV values can be reanalyzed but original generation cannot be reproduced exactly. |
 | Customer IDs | Generated row labels | Filled down sequentially; transformed to Customer_00001-style public labels. Stable only for the frozen sample/order, not a verified source identity. |
 | Network plans and OLT capacity | Supplied scenario metadata; actual capacities and tariff mapping unverified | Four broad tiers, a 12-group customer/OLT dimension and ten usage-simulation IDs. Tier assignment is derived from value_segment; physical OLT inventory is not established by address/group counts. |

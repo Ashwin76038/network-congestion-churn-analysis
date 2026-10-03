@@ -1,21 +1,21 @@
 table olt_info_clean
-	lineageTag: e230e279-34f2-4d73-8c8f-8b58487e865b
+	lineageTag: f4acab30-2a12-487f-8656-d4246670b139
 
 	column olt_id
-		dataType: string
-		lineageTag: b6e10fc7-7978-4cba-8dbb-cfbfc76869fa
+		dataType: int64
+		lineageTag: 6170a663-273b-4c79-9527-b339130f6d48
 		summarizeBy: none
 		sourceColumn: olt_id
 
 	column olt_name
 		dataType: string
-		lineageTag: 4d4272d2-3267-48bd-a995-58cc6c516528
+		lineageTag: 672a12ac-5341-42b0-8072-929e5500bba8
 		summarizeBy: none
 		sourceColumn: olt_name
 
 	column capacity_gbps
 		dataType: int64
-		lineageTag: a62f8f12-2ef6-47b1-be9b-e7afbe1650a5
+		lineageTag: 30d74c8c-b424-449d-bdfe-8b5256117344
 		summarizeBy: none
 		sourceColumn: capacity_gbps
 
@@ -25,6 +25,7 @@ table olt_info_clean
 				let
 				 Source = Csv.Document(File.Contents(DataRoot & "olt_info_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				 Typed = Table.TransformColumnTypes(Headers,{{"olt_id", type text},{"olt_name", type text},{"capacity_gbps", Int64.Type}},"en-US")
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"olt_id", Int64.Type},{"olt_name", type text},{"capacity_gbps", Int64.Type}},"en-US")
 				in Typed
 

@@ -1,22 +1,22 @@
 table complaints
-	lineageTag: d36af046-b8f4-4360-b5f4-dc3e75638281
+	lineageTag: 1da6d5f6-0dfe-41f0-ae4a-30e2b248849d
 
 	column complaint_id
 		dataType: string
-		lineageTag: c3275619-4720-41e5-916e-d11819f91ad2
+		lineageTag: 98652f2f-0dab-4c0d-9312-0f41318501ed
 		summarizeBy: none
 		sourceColumn: complaint_id
 
 	column customer_id
 		dataType: string
-		lineageTag: a0b32ccd-0726-481e-9e36-b14bb65d22f2
+		lineageTag: 5e0a4904-c5c8-4efe-ab63-8ea6fc9569ef
 		summarizeBy: none
 		sourceColumn: customer_id
 
 	column complaint_date
 		dataType: dateTime
 		formatString: dd MMM yyyy
-		lineageTag: 6b3238a4-6bce-4942-8103-a66c3261721f
+		lineageTag: 478b8d2a-c4ba-48e7-b076-b3c587246cc8
 		summarizeBy: none
 		sourceColumn: complaint_date
 
@@ -24,13 +24,13 @@ table complaints
 
 	column category
 		dataType: string
-		lineageTag: a795d94a-1f50-47a3-b0ca-bcb7796f7826
+		lineageTag: de7955c5-868e-45c8-922a-e8b37bbd1ce5
 		summarizeBy: none
 		sourceColumn: category
 
 	column resolution_time_hours
 		dataType: int64
-		lineageTag: 17de0705-1533-4fe2-952f-dae9745dd7bc
+		lineageTag: 19cd74f7-02c9-4861-b251-03983e7cc435
 		summarizeBy: none
 		sourceColumn: resolution_time_hours
 
@@ -40,6 +40,7 @@ table complaints
 				let
 				 Source = Csv.Document(File.Contents(DataRoot & "complaints.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				 Typed = Table.TransformColumnTypes(Headers,{{"complaint_id", type text},{"customer_id", type text},{"complaint_date", type date},{"category", type text},{"resolution_time_hours", Int64.Type}},"en-US")
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"complaint_id", type text},{"customer_id", type text},{"complaint_date", type date},{"category", type text},{"resolution_time_hours", Int64.Type}},"en-US")
 				in Typed
 

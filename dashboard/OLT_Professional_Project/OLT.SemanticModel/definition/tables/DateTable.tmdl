@@ -1,43 +1,22 @@
 table DateTable
-	lineageTag: 232ff971-8ff8-470c-a66c-9045511e04d1
-	dataCategory: Time
+	lineageTag: bed75c8a-43a7-49a0-9f59-5b27f4ca4421
 
 	column Date
 		dataType: dateTime
-		isKey
 		formatString: dd MMM yyyy
-		lineageTag: 6b4e775d-e364-4217-aa63-b63dc5432010
+		lineageTag: 7c5035cb-6441-4b67-ad68-c79be29aaa01
 		summarizeBy: none
 		sourceColumn: Date
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column Year
-		dataType: int64
-		lineageTag: f9be85ed-3a5c-4a18-9fd0-9039241cc789
-		summarizeBy: none
-		sourceColumn: Year
-
-	column 'Month Number'
-		dataType: int64
-		lineageTag: 405be029-2ec2-4b9e-b665-958da88ab0f1
-		summarizeBy: none
-		sourceColumn: Month Number
-
-	column Month
-		dataType: string
-		lineageTag: 92b3e9ed-f059-4683-9fc9-5c2ceff807f5
-		summarizeBy: none
-		sourceColumn: Month
-		sortByColumn: 'Month Number'
-
-	column 'Year Month'
-		dataType: string
-		lineageTag: 1db313ec-c478-4cf1-9327-7ee33b7c5b9e
-		summarizeBy: none
-		sourceColumn: Year Month
-
 	partition DateTable = m
 		mode: import
-		source = let Source = List.Dates(#date(2026,08,01),5,#duration(1,0,0,0)), T=Table.FromList(Source,Splitter.SplitByNothing(),{"Date"}), Typed=Table.TransformColumnTypes(T,{{"Date",type date}}), Y=Table.AddColumn(Typed,"Year",each Date.Year([Date]),Int64.Type), MN=Table.AddColumn(Y,"Month Number",each Date.Month([Date]),Int64.Type), M=Table.AddColumn(MN,"Month",each Date.ToText([Date],"MMM","en-US"),type text), YM=Table.AddColumn(M,"Year Month",each Date.ToText([Date],"yyyy-MM"),type text) in YM
+		source =
+				let
+				 Source = Csv.Document(File.Contents(DataRoot & "DateTable.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"Date", type date}},"en-US")
+				in Typed
 

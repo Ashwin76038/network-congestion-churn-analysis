@@ -1,33 +1,33 @@
 table plans_clean
-	lineageTag: c0ff5615-b7b4-46f0-ac3c-e19fe9c40cf1
+	lineageTag: bbee87bc-c4e9-4e36-9fb5-b622f94e233b
 
 	column plan_id
-		dataType: string
-		lineageTag: e31c5b53-4252-4040-8533-eb2e40da1b98
+		dataType: int64
+		lineageTag: fecbb071-5f49-4e6f-a251-9c3e1fbdd855
 		summarizeBy: none
 		sourceColumn: plan_id
 
 	column plan_tier
 		dataType: string
-		lineageTag: 1a50db9a-5a0d-4309-9ef8-1472e3b1b924
+		lineageTag: 1c3151ba-2441-4052-a1d3-b40357614f07
 		summarizeBy: none
 		sourceColumn: plan_tier
 
 	column value_segment
 		dataType: string
-		lineageTag: f5a43550-4ce3-4dac-a220-3ff870f8b206
+		lineageTag: 50b296b5-e79d-4aeb-abd4-b10f9cfe8b40
 		summarizeBy: none
 		sourceColumn: value_segment
 
 	column speed_mbps
 		dataType: int64
-		lineageTag: 2d4e6836-2313-4df9-9f91-c4c894f55dc7
+		lineageTag: 8db51663-0247-4c77-a10c-c1250350cbc2
 		summarizeBy: none
 		sourceColumn: speed_mbps
 
 	column monthly_price
 		dataType: int64
-		lineageTag: a25bf1d2-1de2-4aa2-ae82-b2eb05e85c14
+		lineageTag: 6f1853df-6f59-4c7c-923f-e02abebae0a4
 		summarizeBy: none
 		sourceColumn: monthly_price
 
@@ -37,6 +37,7 @@ table plans_clean
 				let
 				 Source = Csv.Document(File.Contents(DataRoot & "plans_clean.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
 				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				 Typed = Table.TransformColumnTypes(Headers,{{"plan_id", type text},{"plan_tier", type text},{"value_segment", type text},{"speed_mbps", Int64.Type},{"monthly_price", Int64.Type}},"en-US")
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"plan_id", Int64.Type},{"plan_tier", type text},{"value_segment", type text},{"speed_mbps", Int64.Type},{"monthly_price", Int64.Type}},"en-US")
 				in Typed
 

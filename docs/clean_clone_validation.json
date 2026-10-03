@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-03",
+  "source": "Git HEAD archive; no ignored/private files or Desktop caches",
+  "source_commit": "9790c28464882cb4e3b14e67ad6d643a6b8ddff2",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/03_build_metrics.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/validate_sql.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/audit_public.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/build_dax_validation.py",
+      "status": "passed"
+    }
+  ],
+  "limits": "Uses installed Python dependencies; not a new OS/environment install. DAX generator is not Desktop execution; see separate native validation receipt."
+}

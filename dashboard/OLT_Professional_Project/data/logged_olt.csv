@@ -1,0 +1,11 @@
+olt_id,olt_name,capacity_gbps
+1,OLT_01,10
+2,OLT_02,5
+3,OLT_03,1
+4,OLT_04,1
+5,OLT_05,2
+6,OLT_06,2
+7,OLT_07,5
+8,OLT_08,1
+9,OLT_09,2
+10,OLT_10,1

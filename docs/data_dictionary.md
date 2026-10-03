@@ -7,7 +7,7 @@ Public keys are pseudonymous service-account labels, not independently verified 
 | customer_id | text; Customer_00001 | Sequential row label filled down/generated for this sample; primary key in customers_clean, not a stable operational customer ID |
 | plan_id | integer | FK to four supplied plan tiers |
 | olt_id | integer | Source-address group in customers versus selected simulation ID in usage/network tables; numeric equality does not prove common physical equipment |
-| activation_date | date | Intended meaning: internet plan/service activation, confirmed by author; 1,275 public values differ from original workbook and require reconciliation before cohort claims |
+| activation_date | date | Internet-service activation per author; all public values now withheld, no cohort claims |
 | status | category | Supplied service state, not observed churn |
 | customer_type | category | Supplied customer grouping |
 | connection_count_per_customer | integer | Source attribute; do not sum across service rows |
@@ -44,3 +44,8 @@ Public keys are pseudonymous service-account labels, not independently verified 
 | congestion_status | text | Healthy below .6; Moderate .6-.8 inclusive; High above .8 |
 
 Grains: customers=account; plans=plan; OLTs=OLT; usage/metrics=account-date; network=OLT-date; complaints=event. See [methodology](methodology.md) for missingness, thresholds and limitations. All examples are artificial/generalized.
+
+| activation_date_withheld_flag | integer 1 | Intentional public withholding, not missing original dates |
+| legacy_prepared_future_activation_flag | integer 0/1 | Historical prepared-date flag; 810 total, not current source defects |
+
+`logged_olt` is a separate ten-ID simulation dimension using supplied capacity assumptions. `olt_info_clean` retains twelve assigned source groups; numeric overlap does not verify common equipment.

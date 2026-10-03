@@ -1,3 +1,3 @@
-# Report refresh plan
+# Implemented report
 
-Keep the two-page overview/diagnostics design. Set DataRoot, refresh public CSVs, show unavailable risk counts as unavailable, expose coverage and mapping caveats, and inspect all slicers before exporting screenshots. The Python overview in images/ is validated evidence, not a substitute for Power BI rendering QA.
+Three pages: Simulation overview, Experience investigation, Data readiness. Four page-local slicers distinguish assigned OLT, plan, date and logged OLT. The refreshed report and actual screenshots passed the checks in [Power BI validation](../docs/powerbi_validation.md).

@@ -6,11 +6,11 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["customers_clean", "plans_clean", "usage_logs_clean", "customer_daily_metrics", "olt_daily_metrics", "olt_info_clean", "complaints", "DateTable", "_Measures"]
+annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation PBI_QueryOrder = ["customers_clean","plans_clean","usage_logs_clean","customer_daily_metrics","olt_daily_metrics","olt_info_clean","logged_olt","complaints","DateTable","_Measures","DataRoot"]
 
-annotation PBI_ProTooling = ["DevMode"]
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
 
 ref table customers_clean
 ref table plans_clean
@@ -18,13 +18,10 @@ ref table usage_logs_clean
 ref table customer_daily_metrics
 ref table olt_daily_metrics
 ref table olt_info_clean
+ref table logged_olt
 ref table complaints
 ref table DateTable
 ref table _Measures
-ref table DateTableTemplate_bb827d80-25ec-4e04-a530-a5154cc546fa
-ref table LocalDateTable_697409eb-a260-466c-97d7-d16c449c8fbd
 
 ref cultureInfo en-US
 
-
-ref expression DataRoot

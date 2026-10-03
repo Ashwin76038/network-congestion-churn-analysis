@@ -1,0 +1,31 @@
+table logged_olt
+	lineageTag: 78d01036-b401-4b58-a871-20ee2a267e3f
+
+	column olt_id
+		dataType: int64
+		lineageTag: 09eea7df-f004-46e0-b0fc-679a1deffe64
+		summarizeBy: none
+		sourceColumn: olt_id
+
+	column olt_name
+		dataType: string
+		lineageTag: 8fd42b38-5378-44fd-a84a-8d1eb3df999a
+		summarizeBy: none
+		sourceColumn: olt_name
+
+	column capacity_gbps
+		dataType: int64
+		lineageTag: f94ebd14-6cab-4a3c-9bc9-a9484fa1d405
+		summarizeBy: none
+		sourceColumn: capacity_gbps
+
+	partition logged_olt = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents(DataRoot & "logged_olt.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"olt_id", Int64.Type},{"olt_name", type text},{"capacity_gbps", Int64.Type}},"en-US")
+				in Typed
+

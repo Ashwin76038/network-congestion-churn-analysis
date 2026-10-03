@@ -64,7 +64,8 @@ def reconcile(source_path: Path, root: Path = ROOT, as_of: str = "2026-09-12") -
             checks["status_mapping_rows_matching"] = int(expected_status.eq(public.status).sum())
             checks["account_sequence_rows_matching"] = int(pd.Series([f"Customer_{n:05d}" for n in range(1, len(source) + 1)]).eq(public.customer_id).sum())
     corroborated = bool(checks) and len(source) == len(public) and all(v == len(source) for v in checks.values())
-    matches = int(dates.eq(public_dates).sum()) if corroborated else None
+    comparable = public_dates.notna()
+    matches = int((dates.eq(public_dates) & comparable).sum()) if corroborated and comparable.any() else None
     temporal_checks = {}
     if project == "network_service_accounts" and corroborated:
         usage = pd.read_csv(root / "data/clean/usage_logs_clean.csv")
@@ -98,13 +99,15 @@ def reconcile(source_path: Path, root: Path = ROOT, as_of: str = "2026-09-12") -
         "comparison_as_of_provenance": "current analyst-configured reference date; actual source snapshot date undisclosed",
         "source_future_activation_rows": int(dates.gt(cutoff).sum()),
         "public_service_rows": int(len(public)),
-        "public_activation_min": public_dates.min().strftime("%Y-%m-%d"),
-        "public_activation_max": public_dates.max().strftime("%Y-%m-%d"),
+        "public_activation_min": public_dates.min().strftime("%Y-%m-%d") if comparable.any() else None,
+        "public_activation_max": public_dates.max().strftime("%Y-%m-%d") if comparable.any() else None,
+        "public_activation_dates_available": int(comparable.sum()),
+        "public_activation_dates_unavailable": int((~comparable).sum()),
         "public_future_activation_rows": int(public_dates.gt(cutoff).sum()),
         "row_order_corroboration": checks,
         "row_order_corroborated": corroborated,
         "positional_activation_matches": matches,
-        "positional_activation_mismatches": int(len(source) - matches) if matches is not None else None,
+        "positional_activation_mismatches": int(comparable.sum() - matches) if matches is not None else None,
         "network_usage_temporal_checks": temporal_checks,
         "comparison_limit": "source-order comparison, not a verified stable service-ID join; A/D/E mapping is an analytical assumption because portal definitions are undisclosed",
         "olt_group_limit": "source-address groups, not verified physical inventory; ten separate usage IDs chosen for Network simulation",

@@ -22,4 +22,4 @@ Five days cannot satisfy the current rule's two complete, disjoint seven-day win
 
 Capacities, plan tiers, scoring weights and thresholds are scenario assumptions unless a specific source definition is available. Customer plan amounts can be described with their supplied periods; confidential bills/portal documents are not required for this scoped demonstration and will not be published. Currency and financial recognition remain outside the claims.
 
-The Power BI project, its copied CSV inputs and screenshots are unchanged pending the user's requested approval. The report phase must adopt simulation labels and reconcile measures/filters with Python/SQL before screenshots are presented as current.
+The approved Power BI project now contains refreshed simulation/readiness pages and separate assigned/logged OLT roles. Native DAX and visual checks are documented in `powerbi_validation.md`. Exact customer activation dates are withheld; historical discrepancy flags remain. No synthetic extra days were added.

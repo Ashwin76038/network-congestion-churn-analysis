@@ -1,9 +1,11 @@
-# SQL engine and executed checks
+# SQL engines
 
-The project author confirms using **MySQL** for the original project. The original MySQL workflow has not been executed in this review.
+The author used **MySQL**. On 2 October 2026, MySQL 8.0.46 executed 12 public-data checks, reconciled against pandas: accounts/days/OLTs, mapping conflicts, scored rows, complete calendar windows, mean ratio, independently rebuilt units, complaints and withheld dates. See `mysql_validation.json` and `sql/mysql_kpi_queries.sql`.
 
-The added `sql/queries.sql`, `scripts/validate_sql.py` and public audit use **SQLite** for independent reconciliation of the frozen public scenario. Eight queries passed in that engine. These results do not establish MySQL execution, DAX behavior or Desktop rendering.
+```bash
+python scripts/validate_mysql.py --client mysql --schema portfolio_audit_network_new -- --host=127.0.0.1 --port=3306 --user=YOUR_USER
+```
 
-`queries.sql` explicitly uses SQLite date functions such as `julianday`. It must not be labeled an executed MySQL query file. A MySQL reproduction requires a separate engine-compatible version and a native run; no such run is claimed here.
+Use your authorized instance and existing secure client credential configuration. The schema must be new; the validator does not drop or overwrite existing schemas. The window query requires MySQL 8 and uses TO_DAYS with calendar RANGE frames. This validates these audit queries, not undisclosed original project SQL.
 
-For interview descriptions: “I used MySQL in the project. Additional Python/SQLite checks reconcile the simulated sample; native MySQL and Power BI execution checks are separately pending.”
+`sql/queries.sql`, `scripts/validate_sql.py` and public audits remain separately labeled **SQLite** checks (eight queries). Native DAX/visual results are recorded separately in `powerbi_validation.md`.
