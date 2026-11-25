@@ -2,7 +2,25 @@
 
 A Python, MySQL and Power BI portfolio demonstration of metric design, separate OLT roles, missing-history handling and reproducible data-quality checks.
 
-![Validated Desktop simulation overview](dashboard/screenshots/simulation-overview.png)
+## Latest dashboard preview
+
+These previews were rendered at 3,200 pixels wide from a native Power BI Desktop PDF export on 24 November 2026 of the local `Network_Completed.pbix`, last saved on 16 October 2026. Click an image to inspect its full resolution. They preserve its actual layout and labels, with all four filters set to All. The report uses a five-day simulated usage sample; it does not demonstrate operational congestion or predict observed churn.
+
+The newer local report has three pages: Network usage overview, Service performance and Daily activity. The public editable project linked below remains the earlier version with a Data readiness page. These screenshots do not imply that the newer PBIX or its model is included in this repository. Earlier DAX and MySQL validation receipts apply to the documented public project, not a new validation of this local PBIX.
+
+### Network usage overview
+
+![Network usage overview](assets/network-overview.png)
+
+### Service performance
+
+![Service performance](assets/network-experience.png)
+
+### Daily activity
+
+![Daily activity](assets/network-daily-activity.png)
+
+Visible all-filter totals include **1,280 service-account keys**, **6,400 account-days** across **five dates**, **30.03 ms average latency**, **14.99 minutes average downtime** and **805 simulated complaints**. The displayed usage card rounds to **89K GB**. These are sample calculations, not measured business improvements.
 
 ## Data and scope
 
@@ -48,3 +66,12 @@ The author used MySQL. SQLite checks are supplementary portable audits and are l
 [Portfolio review](docs/portfolio_review.md) includes changed-file groups, before/after evidence, an interview story and the scoped **4/5 simulation/BI readiness assessment**. [Methodology](docs/methodology.md), [dictionary](docs/data_dictionary.md), [model/filter contract](dashboard/Data_Model.md), [authenticity](docs/data_authenticity.md) and [source reconciliation](docs/source_workbook_review.md) define the limits.
 
 Real churn or congestion claims would require authentic longitudinal/interval measurements, stable source identities and validated outcomes. Those are unavailable and are not required for this clearly labeled simulation deliverable.
+
+
+## Earlier public-project evidence
+
+The original screenshots and validation receipts remain available in [Power BI validation](docs/powerbi_validation.md).
+
+## Author
+
+[Aswin S](https://github.com/Ashwin76038)
