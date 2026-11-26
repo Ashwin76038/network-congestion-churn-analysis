@@ -2,9 +2,26 @@
 
 A Python, SQL and Power BI project that explores broadband usage and service experience while testing whether the available data can support churn-risk calculations. The five-day usage sample is simulated; the strongest result is identifying where a metric must remain unavailable.
 
+## Problem and analytical questions
+
+How does service experience vary across accounts and days, and is there enough history to calculate a defensible churn-risk score? The project tests these questions on a five-day simulated sample before interpreting any score.
+
+## Key findings
+
+| Result | Interpretation |
+|---|---|
+| 1,280 service-account keys and 6,400 account-days | Five dates, 1–5 August 2026; account keys are row labels. |
+| Zero complete 14-day windows | Full risk scores and high-risk share remain blank, not zero. Five days cannot validate a churn predictor. |
+| 1,135 assigned/logged ID conflicts (88.67%) | Compatibility between source-derived groups and a separately generated simulation, not evidence of faulty provisioning. |
+| Ten simulated OLT IDs versus 12 source groups | Different entity scopes; overlapping numeric labels do not prove identity. |
+| 9.83% mean daily-average capacity ratio; 17.98% maximum | Ratios against assumed capacity, not measured peak congestion. |
+| 805 simulated complaints | Separately generated events using seed 42. |
+
+The report shows 30.03 ms average latency, 14.99 minutes average downtime and rounded usage of 89K GB. The threshold-based experience score averages 89.07. Source reconciliation also found 71 simulated account-days before original activation across 15 keys; this is a chronology mismatch, not real pre-activation traffic.
+
 ## Dashboard preview
 
-Three actual pages from the local `Network_Completed.pbix`, last saved on 16 October 2026 and exported through Power BI Desktop on 24 November. Images are 3,200 pixels wide with all four filters set to All.
+Explore usage, service performance and daily activity across the three report pages.
 
 ### Network usage overview
 
@@ -18,7 +35,13 @@ Three actual pages from the local `Network_Completed.pbix`, last saved on 16 Oct
 
 ![Daily activity](assets/network-daily-activity.png)
 
-## Analytical questions and implemented work
+## Data sources and assumptions
+
+Usage, speed, downtime and latency were generated using random Excel values because operational logs were unavailable. The author chose ten OLT IDs and five dates. The frozen CSV calculations are reproducible; the original random generation cannot be replayed without its formulas and random state. Plans, capacities, score weights and thresholds are scenario assumptions.
+
+Customer attributes derive from a confidential source extract. Contacts, raw addresses and exact activation dates remain private. Sequential identifiers are not stable customer identities. [Simulation contract](docs/simulation_contract.md) · [Source reconciliation](docs/source_workbook_review.md).
+
+## How the analysis was built
 
 - Profile daily usage, latency, downtime and complaints at account-day grain.
 - Convert decimal GB per day to average Gbps before comparing with assumed capacity.
@@ -27,26 +50,11 @@ Three actual pages from the local `Network_Completed.pbix`, last saved on 16 Oct
 - Require two complete, disjoint seven-day windows and positive prior usage before calculating the full rule-based risk score.
 - Reconcile pandas, SQL and Power BI measures with tests for missing days, duplicate keys, zero denominators and report-input consistency.
 
-## Results that can be defended
+## Challenges and lessons
 
-| Result | Interpretation |
-|---|---|
-| 1,280 service-account keys and 6,400 account-days | Five dates, 1–5 August 2026; account keys are row labels. |
-| Zero complete 14-day windows | Full risk scores and high-risk share remain blank, not zero. Five days cannot validate a churn predictor. |
-| 1,135 assigned/logged ID conflicts (88.67%) | Compatibility between source-derived groups and a separately generated simulation, not evidence of faulty provisioning. |
-| Ten simulated OLT IDs versus 12 source groups | Different entity scopes; overlapping numeric labels do not prove identity. |
-| 9.83% mean daily-average capacity ratio; 17.98% maximum | Ratios against assumed capacity, not measured peak congestion. |
-| 805 simulated complaints | Separately generated events using seed 42. |
+The main challenge is insufficient history: five days cannot supply two complete seven-day windows. The pipeline leaves full risk scores unavailable. Assigned and logged OLT identifiers also describe different scopes, so the analysis exposes conflicts rather than treating matching labels as verified device identities. As-of complaint counting prevents later events from influencing earlier observations.
 
-The report shows 30.03 ms average latency, 14.99 minutes average downtime and rounded usage of 89K GB. The threshold-based experience score averages 89.07. Source reconciliation also found 71 simulated account-days before original activation across 15 keys; this is a chronology mismatch, not real pre-activation traffic.
-
-## Data and methodology
-
-Usage, speed, downtime and latency were generated using random Excel values because operational logs were unavailable. The author chose ten OLT IDs and five dates. The frozen CSV calculations are reproducible; the original random generation cannot be replayed without its formulas and random state. Plans, capacities, score weights and thresholds are scenario assumptions.
-
-Customer attributes derive from a confidential source extract. Contacts, raw addresses and exact activation dates remain private. Sequential identifiers are not stable customer identities. [Simulation contract](docs/simulation_contract.md) · [Source reconciliation](docs/source_workbook_review.md).
-
-## Explore the source
+## Project structure and report availability
 
 | Location | Purpose |
 |---|---|
@@ -59,7 +67,7 @@ Customer attributes derive from a confidential source extract. Contacts, raw add
 
 The newer local report shown above contains Overview, Experience review and Daily activity. The versioned editable PBIP contains the earlier Simulation overview, Experience investigation and Data readiness pages. Its historical DAX receipts do not constitute a new validation of the newer local PBIX. Legacy repository and `churn_*` field names remain for compatibility.
 
-## Reproduce and test
+## Run and validate
 
 ```bash
 python -m pip install -r requirements.txt
@@ -75,7 +83,7 @@ Open the included PBIP, refresh, apply pending changes and run `docs/validate_me
 
 The reviewed source passed **15 Python tests on 25 November 2026**. Historical evidence records **133 native DAX checks** across seven contexts and **12 native MySQL checks**. Those engines were not rerun for this README edit. [Desktop evidence](docs/powerbi_validation.md) · [MySQL receipt](docs/mysql_validation.json).
 
-## Limits and practical value
+## Limitations and practical value
 
 This project demonstrates metric design, data contracts, SQL reconciliation and honest handling of missing history. It does not demonstrate observed churn prediction, causal retention improvement or actual congestion. Real operating decisions require measured longitudinal/interval telemetry, stable identifiers and verified outcomes. No private workbook is needed for the public downstream analysis; do not commit confidential extracts or `.pbi` caches. Earlier Git history may retain legacy artifacts.
 
